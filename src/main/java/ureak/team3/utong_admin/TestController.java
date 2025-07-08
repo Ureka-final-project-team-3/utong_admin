@@ -8,7 +8,7 @@ public class TestController {
 
     @GetMapping("/")
     public String test() {
-        return "Hello, this is a test response from the TestController!😀 제발요";
+        return "Hello, this is a test response from the TestController!😀 제발요 please";
     }
 
 }
