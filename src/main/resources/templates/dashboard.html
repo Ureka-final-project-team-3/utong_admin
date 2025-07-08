@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자 대시보드</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+        
+        .header {
+            background-color: #343a40;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .logout-btn {
+            background-color: #dc3545;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        
+        .logout-btn:hover {
+            background-color: #c82333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .card h3 {
+            margin-top: 0;
+            color: #333;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 0.5rem;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #007bff;
+        }
+        
+        .welcome-message {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .welcome-message h2 {
+            margin: 0;
+            font-size: 1.8rem;
+        }
+        
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .menu-item {
+            background: white;
+            padding: 1rem;
+            border-radius: 6px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+            border: 1px solid #e9ecef;
+        }
+        
+        .menu-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .menu-item h4 {
+            margin: 0.5rem 0;
+            color: #333;
+        }
+        
+        .menu-item p {
+            margin: 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>관리자 대시보드</h1>
+        <div class="user-info">
+            <span th:text="${adminEmail}">관리자</span>
+            <a href="/auth/logout" class="logout-btn">로그아웃</a>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="welcome-message">
+            <h2>환영합니다!</h2>
+            <p>유통 관리자 페이지에 오신 것을 환영합니다.</p>
+        </div>
+        
+        <div class="dashboard-grid">
+            <div class="card">
+                <h3>시스템 현황</h3>
+                <div class="menu-grid">
+                    <div class="menu-item">
+                        <h4>사용자 관리</h4>
+                        <p>전체 사용자 조회 및 관리</p>
+                    </div>
+                    <div class="menu-item">
+                        <h4>상품 관리</h4>
+                        <p>상품 등록, 수정, 삭제</p>
+                    </div>
+                    <div class="menu-item">
+                        <h4>주문 관리</h4>
+                        <p>주문 현황 및 처리</p>
+                    </div>
+                    <div class="menu-item">
+                        <h4>통계</h4>
+                        <p>매출 및 사용자 통계</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>오늘의 통계</h3>
+                <div style="text-align: center; padding: 1rem;">
+                    <div style="margin-bottom: 1rem;">
+                        <div class="stat-number">1,234</div>
+                        <div style="color: #666;">총 사용자</div>
+                    </div>
+                    <div style="margin-bottom: 1rem;">
+                        <div class="stat-number">56</div>
+                        <div style="color: #666;">오늘 가입</div>
+                    </div>
+                    <div>
+                        <div class="stat-number">₩2,345,678</div>
+                        <div style="color: #666;">오늘 매출</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 메뉴 아이템 클릭 이벤트
+        document.querySelectorAll('.menu-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const title = this.querySelector('h4').textContent;
+                alert(`${title} 기능은 준비 중입니다.`);
+            });
+        });
+    </script>
+</body>
+</html>
