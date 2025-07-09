@@ -1,8 +1,13 @@
 package ureka.team3.utong_admin.groupcode.entity;
 
-import jakarta.persistence.*;
-import lombok.*;
-import org.springframework.data.domain.Persistable;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import ureka.team3.utong_admin.groupcode.dto.GroupCodeDto;
 
 @Entity
