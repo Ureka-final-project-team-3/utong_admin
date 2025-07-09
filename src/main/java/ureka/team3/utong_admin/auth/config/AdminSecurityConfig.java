@@ -22,7 +22,10 @@ public class AdminSecurityConfig {
         return http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/login", "/auth/login", "/css/**", "/js/**", "/images/**", "/actuator/**").permitAll()
+                .requestMatchers("/login", "/auth/login", "/css/**", "/js/**", "/images/**", "/actuator/**"
+//                        ,"/api/**"
+                )
+                .permitAll()
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form
