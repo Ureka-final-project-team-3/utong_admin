@@ -1,0 +1,69 @@
+package ureka.team3.utong_admin.common.handler;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import ureka.team3.utong_admin.common.dto.ApiResponse;
+import ureka.team3.utong_admin.common.exception.BusinessException;
+import ureka.team3.utong_admin.common.exception.ErrorCode;
+import ureka.team3.utong_admin.common.exception.ValidationErrorResponse;
+
+import jakarta.servlet.http.HttpServletRequest;
+
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+
+    private final Logger log = LoggerFactory.getLogger(getClass());
+
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<ApiResponse<Void>> handleBusinessException(
+            BusinessException e, HttpServletRequest request) {
+
+        log.error("Business error at {}: {}", request.getRequestURI(), e.getMessage(), e);
+        
+        return ResponseEntity
+                .status(e.getErrorCode().getStatus())
+                .body(ApiResponse.fail(e.getErrorCode()));
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ApiResponse<ValidationErrorResponse>> handleValidationExceptions(
+            MethodArgumentNotValidException ex) {
+
+        log.warn("Validation error: {}", ex.getMessage());
+
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getFieldErrors().forEach(error ->
+                errors.put(error.getField(), error.getDefaultMessage())
+        );
+
+        ValidationErrorResponse errorResponse = ValidationErrorResponse.of(errors);
+
+        return ResponseEntity
+                .status(ErrorCode.INVALID_INPUT_VALUE.getStatus())
+                .body(new ApiResponse<>(
+                        ErrorCode.INVALID_INPUT_VALUE.getStatus().value(),
+                        ErrorCode.INVALID_INPUT_VALUE.getCode(),
+                        ErrorCode.INVALID_INPUT_VALUE.getMessage(),
+                        errorResponse
+                ));
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ApiResponse<Void>> handleGeneralException(
+            Exception e, HttpServletRequest request) {
+
+        log.error("Unexpected error at {}: {}", request.getRequestURI(), e.getMessage(), e);
+        
+        return ResponseEntity
+                .status(ErrorCode.INTERNAL_SERVER_ERROR.getStatus())
+                .body(ApiResponse.fail(ErrorCode.INTERNAL_SERVER_ERROR));
+    }
+}
