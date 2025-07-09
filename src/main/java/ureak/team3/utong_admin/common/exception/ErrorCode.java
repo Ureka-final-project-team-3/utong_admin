@@ -1,4 +1,4 @@
-package com.ureka.team3.utong_backend.common.exception;
+package ureak.team3.utong_admin.common.exception;
 
 import org.springframework.http.HttpStatus;
 

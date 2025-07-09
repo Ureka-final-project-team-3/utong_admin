@@ -1,6 +1,6 @@
-package com.ureka.team3.utong_backend.common.exception.business;
-import com.ureka.team3.utong_backend.common.exception.BusinessException;
-import com.ureka.team3.utong_backend.common.exception.ErrorCode;
+package ureak.team3.utong_admin.common.exception.business;
+import ureak.team3.utong_admin.common.exception.BusinessException;
+import ureak.team3.utong_admin.common.exception.ErrorCode;
 
 public class AlreadyReviewedException extends BusinessException {
     public AlreadyReviewedException() {

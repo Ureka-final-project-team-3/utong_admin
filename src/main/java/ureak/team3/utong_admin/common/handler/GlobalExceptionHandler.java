@@ -1,4 +1,4 @@
-package com.ureka.team3.utong_backend.common.handler;
+package ureak.team3.utong_admin.common.handler;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.ureka.team3.utong_backend.common.dto.ApiResponse;
-import com.ureka.team3.utong_backend.common.exception.BusinessException;
-import com.ureka.team3.utong_backend.common.exception.ErrorCode;
-import com.ureka.team3.utong_backend.common.exception.ValidationErrorResponse;
+import ureak.team3.utong_admin.common.exception.BusinessException;
+import ureak.team3.utong_admin.common.exception.ErrorCode;
+import ureak.team3.utong_admin.common.exception.ValidationErrorResponse;
 
 import jakarta.servlet.http.HttpServletRequest;
 

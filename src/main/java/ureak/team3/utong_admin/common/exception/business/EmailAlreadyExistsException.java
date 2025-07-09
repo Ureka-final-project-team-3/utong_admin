@@ -1,7 +1,7 @@
-package com.ureka.team3.utong_backend.common.exception.business;
+package ureak.team3.utong_admin.common.exception.business;
 
-import com.ureka.team3.utong_backend.common.exception.BusinessException;
-import com.ureka.team3.utong_backend.common.exception.ErrorCode;
+import ureak.team3.utong_admin.common.exception.BusinessException;
+import ureak.team3.utong_admin.common.exception.ErrorCode;
 
 public class EmailAlreadyExistsException extends BusinessException {
     public EmailAlreadyExistsException() {

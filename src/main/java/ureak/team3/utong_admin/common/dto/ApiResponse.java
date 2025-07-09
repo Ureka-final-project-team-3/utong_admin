@@ -1,6 +1,6 @@
-package com.ureka.team3.utong_backend.common.dto;
+package ureak.team3.utong_admin.common.dto;
 
-import com.ureka.team3.utong_backend.common.exception.ErrorCode;
+import ureak.team3.utong_admin.common.exception.ErrorCode;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
