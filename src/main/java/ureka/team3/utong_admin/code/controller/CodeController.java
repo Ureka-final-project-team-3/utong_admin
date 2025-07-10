@@ -18,12 +18,15 @@ public class CodeController {
     private final CodeService codeService;
 
     @GetMapping("/codes")
-    public ResponseEntity<ApiResponse<List<CodeDto>>> listCode(String groupCode, int pageNumber, int pageSize) {
+    public ResponseEntity<ApiResponse<List<CodeDto>>> listCode(
+            @RequestParam(name = "groupCode") String groupCode, 
+            @RequestParam(name = "pageNumber", defaultValue = "0") int pageNumber, 
+            @RequestParam(name = "pageSize", defaultValue = "10") int pageSize) {
         return ResponseEntity.ok(codeService.listCode(groupCode, pageNumber, pageSize));
     }
 
     @GetMapping("/codes/{groupCode}/{code}")
-    public ResponseEntity<ApiResponse<CodeDto>> detailCode(@PathVariable String groupCode, @PathVariable String code) {
+    public ResponseEntity<ApiResponse<CodeDto>> detailCode(@PathVariable("groupCode") String groupCode, @PathVariable("code") String code) {
         return ResponseEntity.ok(codeService.detailCode(new CodeKey(groupCode, code)));
     }
 
@@ -34,15 +37,15 @@ public class CodeController {
 
     @PutMapping("/codes/{groupCode}/{code}")
     public ResponseEntity<ApiResponse<Void>> updateCode(
-            @PathVariable String groupCode,
-            @PathVariable String code,
+            @PathVariable("groupCode") String groupCode,
+            @PathVariable("code") String code,
             @RequestBody CodeDto codeDto
     ) {
         return ResponseEntity.ok(codeService.updateCode(new CodeKey(groupCode, code), codeDto));
     }
 
     @DeleteMapping("/codes/{groupCode}/{code}")
-    public ResponseEntity<ApiResponse<Void>> deleteCode(@PathVariable String groupCode, @PathVariable String code) {
+    public ResponseEntity<ApiResponse<Void>> deleteCode(@PathVariable("groupCode") String groupCode, @PathVariable("code") String code) {
         return ResponseEntity.ok(codeService.deleteCode(new CodeKey(groupCode, code)));
     }
 

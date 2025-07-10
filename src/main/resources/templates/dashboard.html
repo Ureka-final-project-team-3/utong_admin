@@ -578,7 +578,173 @@
             font-size: 1.1rem;
         }
 
-        .json-display {
+        /* Group Code Card Styles */
+        .groupcode-card {
+            background: white;
+            border-radius: 16px;
+            padding: 1.8rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e9ecef;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .groupcode-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #27ae60, #229954);
+        }
+
+        .groupcode-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .groupcode-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+            gap: 1.5rem;
+        }
+
+        .groupcode-main-info {
+            flex: 1;
+        }
+
+        .groupcode-id {
+            font-size: 0.9rem;
+            color: #fff;
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #27ae60, #229954);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+
+        .groupcode-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.3px;
+        }
+
+        .groupcode-desc {
+            color: #6c757d;
+            font-size: 1rem;
+            line-height: 1.5;
+            padding: 0.5rem 0.8rem;
+            background: rgba(39, 174, 96, 0.1);
+            border-radius: 8px;
+            border-left: 3px solid #27ae60;
+        }
+
+        .groupcode-actions {
+            display: flex;
+            gap: 0.8rem;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        .btn-success {
+            background: linear-gradient(45deg, #27ae60, #229954);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(39, 174, 96, 0.2);
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.4);
+            background: linear-gradient(45deg, #229954, #1e7e4a);
+        }
+
+        .btn-warning {
+            background: linear-gradient(45deg, #f39c12, #e67e22);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(243, 156, 18, 0.2);
+        }
+
+        .btn-warning:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
+            background: linear-gradient(45deg, #e67e22, #d35400);
+        }
+
+        /* Modal Form Styles */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+        }
+
+        .form-textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            min-height: 100px;
+            resize: vertical;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-textarea:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+        }
+
+        .modal-form-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e9ecef;
+        
             background: #f8f9fa;
             border-radius: 12px;
             padding: 1.5rem;
@@ -766,11 +932,15 @@
 
         // 계정 목록 로딩
         async function loadAccounts() {
+            console.log('loadAccounts 함수 호출됨');
             try {
                 const response = await fetch('/api/admin/accounts?pageNumber=0&pageSize=20');
                 const data = await response.json();
                 
+                console.log('API 응답 데이터:', data);
+                
                 if (data.resultCode === 200) {
+                    console.log('showAccountsModal 호출 전, 데이터:', data.data);
                     showAccountsModal(data.data);
                 } else {
                     alert('계정 목록을 불러오는데 실패했습니다: ' + data.message);
@@ -788,7 +958,7 @@
                 const data = await response.json();
                 
                 if (data.resultCode === 200) {
-                    showGenericModal('그룹 코드 목록', data.data);
+                    showGroupCodesModal(data.data);
                 } else {
                     alert('그룹 코드 목록을 불러오는데 실패했습니다: ' + data.message);
                 }
@@ -822,18 +992,25 @@
 
         // 계정 모달 표시
         function showAccountsModal(accounts) {
+            console.log('showAccountsModal 함수 호출됨');
+            console.log('받은 accounts 데이터:', accounts);
+            
             const modal = createModal('계정 목록');
             const body = modal.querySelector('.modal-body');
             
             if (!accounts || accounts.length === 0) {
+                console.log('계정이 없음');
                 body.innerHTML = '<div class="no-data">표시할 계정이 없습니다.</div>';
             } else {
+                console.log('계정 개수:', accounts.length);
                 // 계정 개수 표시
                 const accountCount = `<div style="margin-bottom: 1.5rem; padding: 1rem; background: linear-gradient(135deg, #e8f4fd, #d1ecf1); border-radius: 12px; border-left: 4px solid #17a2b8;">
                     <strong style="color: #0c5460; font-size: 1.1rem;">총 ${accounts.length}개의 계정</strong>
                 </div>`;
                 
-                const accountCards = accounts.map(account => {
+                const accountCards = accounts.map((account, index) => {
+                    console.log(`계정 ${index + 1} 처리 중:`, account);
+                    
                     const userInfo = account.user ? `
                         <div class="detail-item">
                             <div class="detail-label">실명</div>
@@ -902,13 +1079,248 @@
                     `;
                 }).join('');
                 
+                console.log('HTML 생성 완료, body에 추가');
                 body.innerHTML = accountCount + accountCards;
             }
             
             document.body.appendChild(modal);
+            console.log('모달을 DOM에 추가 완료');
         }
 
-        // 일반 모달 표시
+        // 그룹 코드 모달 표시
+        function showGroupCodesModal(groupCodes) {
+            console.log('showGroupCodesModal 함수 호출됨');
+            console.log('받은 groupCodes 데이터:', groupCodes);
+            
+            const modal = createModal('그룹 코드 관리');
+            const body = modal.querySelector('.modal-body');
+            
+            if (!groupCodes || groupCodes.length === 0) {
+                console.log('그룹 코드가 없음');
+                body.innerHTML = `
+                    <div class="no-data">표시할 그룹 코드가 없습니다.</div>
+                    <div style="text-align: center; margin-top: 2rem;">
+                        <button class="btn-success" onclick="openCreateGroupCodeModal()">➕ 새 그룹 코드 추가</button>
+                    </div>
+                `;
+            } else {
+                console.log('그룹 코드 개수:', groupCodes.length);
+                
+                // 그룹 코드 개수 및 추가 버튼
+                const headerSection = `
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; padding: 1rem; background: linear-gradient(135deg, #e8f5e8, #d4edda); border-radius: 12px; border-left: 4px solid #27ae60;">
+                        <strong style="color: #155724; font-size: 1.1rem;">📝 총 ${groupCodes.length}개의 그룹 코드</strong>
+                        <button class="btn-success" onclick="openCreateGroupCodeModal()">➕ 새 그룹 코드 추가</button>
+                    </div>
+                `;
+                
+                const groupCodeCards = groupCodes.map((groupCode, index) => {
+                    console.log(`그룹 코드 ${index + 1} 처리 중:`, groupCode);
+                    
+                    return `
+                        <div class="groupcode-card">
+                            <div class="groupcode-header">
+                                <div class="groupcode-main-info">
+                                    <div class="groupcode-id">📋 ${groupCode.groupCode}</div>
+                                    <div class="groupcode-name">📂 ${groupCode.groupCodeName}</div>
+                                    <div class="groupcode-desc">📝 ${groupCode.groupCodeDesc || '설명이 없습니다.'}</div>
+                                </div>
+                                <div class="groupcode-actions">
+                                    <button class="btn-warning" onclick="openEditGroupCodeModal('${groupCode.groupCode}', '${groupCode.groupCodeName}', '${groupCode.groupCodeDesc || ''}')" title="그룹 코드 수정">✏️ 수정</button>
+                                    <button class="btn-danger" onclick="deleteGroupCode('${groupCode.groupCode}')" title="그룹 코드 삭제">🗑️ 삭제</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+                
+                console.log('HTML 생성 완료, body에 추가');
+                body.innerHTML = headerSection + groupCodeCards;
+            }
+            
+            document.body.appendChild(modal);
+            console.log('모달을 DOM에 추가 완료');
+        }
+
+        // 그룹 코드 생성 모달
+        function openCreateGroupCodeModal() {
+            const modal = createModal('새 그룹 코드 추가');
+            const body = modal.querySelector('.modal-body');
+            
+            body.innerHTML = `
+                <form id="createGroupCodeForm">
+                    <div class="form-group">
+                        <label class="form-label">📋 그룹 코드 (3자리)</label>
+                        <input type="text" id="newGroupCode" class="form-input" placeholder="예: 010" maxlength="3" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">📂 그룹 코드명</label>
+                        <input type="text" id="newGroupCodeName" class="form-input" placeholder="예: 거래상태" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">📝 설명</label>
+                        <textarea id="newGroupCodeDesc" class="form-textarea" placeholder="그룹 코드에 대한 설명을 입력하세요"></textarea>
+                    </div>
+                    <div class="modal-form-actions">
+                        <button type="button" class="btn-secondary" onclick="this.closest('.modal-overlay').remove()">취소</button>
+                        <button type="submit" class="btn-success">✅ 생성</button>
+                    </div>
+                </form>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // 폼 제출 이벤트
+            document.getElementById('createGroupCodeForm').addEventListener('submit', createGroupCode);
+        }
+
+        // 그룹 코드 수정 모달
+        function openEditGroupCodeModal(groupCode, groupCodeName, groupCodeDesc) {
+            const modal = createModal('그룹 코드 수정');
+            const body = modal.querySelector('.modal-body');
+            
+            body.innerHTML = `
+                <form id="editGroupCodeForm">
+                    <div class="form-group">
+                        <label class="form-label">📋 그룹 코드</label>
+                        <input type="text" id="editGroupCode" class="form-input" value="${groupCode}" readonly style="background-color: #f8f9fa;">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">📂 그룹 코드명</label>
+                        <input type="text" id="editGroupCodeName" class="form-input" value="${groupCodeName}" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">📝 설명</label>
+                        <textarea id="editGroupCodeDesc" class="form-textarea">${groupCodeDesc}</textarea>
+                    </div>
+                    <div class="modal-form-actions">
+                        <button type="button" class="btn-secondary" onclick="this.closest('.modal-overlay').remove()">취소</button>
+                        <button type="submit" class="btn-warning">✏️ 수정</button>
+                    </div>
+                </form>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // 폼 제출 이벤트
+            document.getElementById('editGroupCodeForm').addEventListener('submit', (e) => updateGroupCode(e, groupCode));
+        }
+
+        // 그룹 코드 생성
+        async function createGroupCode(e) {
+            e.preventDefault();
+            
+            const groupCode = document.getElementById('newGroupCode').value.trim();
+            const groupCodeName = document.getElementById('newGroupCodeName').value.trim();
+            const groupCodeDesc = document.getElementById('newGroupCodeDesc').value.trim();
+            
+            if (!groupCode || !groupCodeName) {
+                alert('그룹 코드와 그룹 코드명은 필수입니다.');
+                return;
+            }
+            
+            if (groupCode.length !== 3) {
+                alert('그룹 코드는 정확히 3자리여야 합니다.');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/admin/group-codes', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        groupCode: groupCode,
+                        groupCodeName: groupCodeName,
+                        groupCodeDesc: groupCodeDesc
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.resultCode === 200) {
+                    alert('그룹 코드가 성공적으로 생성되었습니다.');
+                    document.querySelector('.modal-overlay').remove();
+                    loadGroupCodes(); // 목록 새로고침
+                    refreshStats();
+                } else {
+                    alert('생성 실패: ' + data.message);
+                }
+            } catch (error) {
+                console.error('그룹 코드 생성 실패:', error);
+                alert('생성 중 오류가 발생했습니다: ' + error.message);
+            }
+        }
+
+        // 그룹 코드 수정
+        async function updateGroupCode(e, groupCode) {
+            e.preventDefault();
+            
+            const groupCodeName = document.getElementById('editGroupCodeName').value.trim();
+            const groupCodeDesc = document.getElementById('editGroupCodeDesc').value.trim();
+            
+            if (!groupCodeName) {
+                alert('그룹 코드명은 필수입니다.');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`/api/admin/group-codes/${groupCode}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        groupCode: groupCode,
+                        groupCodeName: groupCodeName,
+                        groupCodeDesc: groupCodeDesc
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.resultCode === 200) {
+                    alert('그룹 코드가 성공적으로 수정되었습니다.');
+                    document.querySelector('.modal-overlay').remove();
+                    loadGroupCodes(); // 목록 새로고침
+                } else {
+                    alert('수정 실패: ' + data.message);
+                }
+            } catch (error) {
+                console.error('그룹 코드 수정 실패:', error);
+                alert('수정 중 오류가 발생했습니다: ' + error.message);
+            }
+        }
+
+        // 그룹 코드 삭제
+        async function deleteGroupCode(groupCode) {
+            if (!confirm(`그룹 코드 "${groupCode}"를 정말 삭제하시겠습니까?\n이 작업은 되돌릴 수 없습니다.`)) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`/api/admin/group-codes/${groupCode}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.resultCode === 200) {
+                    alert('그룹 코드가 성공적으로 삭제되었습니다.');
+                    loadGroupCodes(); // 목록 새로고침
+                    refreshStats();
+                } else {
+                    alert('삭제 실패: ' + data.message);
+                }
+            } catch (error) {
+                console.error('그룹 코드 삭제 실패:', error);
+                alert('삭제 중 오류가 발생했습니다: ' + error.message);
+            }
+        }
         function showGenericModal(title, data) {
             const modal = createModal(title);
             const body = modal.querySelector('.modal-body');
