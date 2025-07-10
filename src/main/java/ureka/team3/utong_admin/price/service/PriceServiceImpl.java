@@ -35,4 +35,17 @@ public class PriceServiceImpl implements PriceService {
             throw new BusinessException(ErrorCode.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @Override
+    public ApiResponse<PriceDto> getPrice(String id) {
+        try {
+            Price price = priceRepository.findById(id)
+                    .orElseThrow(() -> new BusinessException(ErrorCode.PRICE_NOT_FOUND, "해당 정보가 존재하지 않습니다."));
+
+            return ApiResponse.success(PriceDto.from(price));
+        } catch (Exception e) {
+            log.info("조회 중 오류가 발생하였습니다. {}", e.getMessage());
+            throw new BusinessException(ErrorCode.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

@@ -7,4 +7,6 @@ public interface PriceService {
 
     public ApiResponse<Void> updatePrice(String id, PriceDto priceDto);
 
+    public ApiResponse<PriceDto> getPrice(String id);
+
 }
