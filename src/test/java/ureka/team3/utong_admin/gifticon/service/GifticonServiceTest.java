@@ -610,4 +610,34 @@ class GifticonServiceTest {
         verify(s3Service, times(1)).deleteFile(gifticon.getImageKey());
         verify(gifticonRepository, times(1)).delete(gifticon);
     }
+
+    @Test
+    @DisplayName("기프티콘 수량 조회 성공")
+    void countGifticon_Success() {
+        // Given
+        long expectedCount = 5L;
+        given(gifticonRepository.count()).willReturn(expectedCount);
+
+        // When
+        ApiResponse<Long> result = gifticonService.countGifticon();
+
+        // Then
+        assertThat(result.getResultCode()).isEqualTo(200);
+        assertThat(result.getData()).isEqualTo(expectedCount);
+
+        verify(gifticonRepository, times(1)).count();
+    }
+
+    @Test
+    @DisplayName("기프티콘 수량 조회 실패 - DB 오류")
+    void countGifticon_DatabaseError_ThrowsException() {
+        // Given
+        given(gifticonRepository.count()).willThrow(new RuntimeException("DB 연결 실패"));
+
+        // When & Then
+        assertThatThrownBy(() -> gifticonService.countGifticon())
+                .isInstanceOf(FileProcessingException.class);
+
+        verify(gifticonRepository, times(1)).count();
+    }
 }
