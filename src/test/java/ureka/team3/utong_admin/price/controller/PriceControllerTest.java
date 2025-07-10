@@ -15,6 +15,7 @@ import ureka.team3.utong_admin.price.service.PriceServiceImpl;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -52,5 +53,27 @@ class PriceControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.resultCode").value("200"));
 
+    }
+
+    @Test
+    void getPrice_성공_test() throws Exception {
+        // given
+        String id = "903ee67c-71b3-432e-bbd1-aaf5d5043376";
+        PriceDto priceDto = PriceDto.builder()
+                .minimumPrice(1000L)
+                .minimumRate(30.0F)
+                .tax(2.5F)
+                .build();
+
+        ApiResponse<PriceDto> expectedResponse = ApiResponse.success(priceDto);
+        when(priceService.getPrice(id)).thenReturn(expectedResponse);
+
+        // when & then
+        mockMvc.perform(get("/api/admin/prices"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.resultCode").value("200"))
+                .andExpect(jsonPath("$.data.minimumPrice").value(1000L))
+                .andExpect(jsonPath("$.data.minimumRate").value(30.0F))
+                .andExpect(jsonPath("$.data.tax").value(2.5F));
     }
 }
