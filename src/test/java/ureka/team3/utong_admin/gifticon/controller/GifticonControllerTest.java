@@ -346,6 +346,34 @@ class GifticonControllerTest {
     }
 
     @Test
+    @DisplayName("기프티콘 수량 조회 성공")
+    void getGifticonCount_Success() throws Exception {
+        // Given
+        long expectedCount = 100L;
+
+        given(gifticonService.countGifticon()).willReturn(ApiResponse.success(expectedCount));
+
+        // When & Then
+        mockMvc.perform(get("/api/admin/gifticons/count"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.resultCode").value(200))
+                .andExpect(jsonPath("$.data").value(expectedCount));
+    }
+
+    @Test
+    @DisplayName("기프티콘 수량 조회 실패 - 서비스 예외")
+    void getGifticonCount_ServiceException_InternalServerError() throws Exception {
+        // Given
+        given(gifticonService.countGifticon())
+                .willThrow(new FileProcessingException("기프티콘 수량 조회 오류"));
+
+        // When & Then
+        mockMvc.perform(get("/api/admin/gifticons/count"))
+                .andExpect(status().isInternalServerError());
+    }
+
+    @Test
     @DisplayName("인증 없이 접근 - Unauthorized")
     void accessWithoutAuth_Unauthorized() throws Exception {
         // Given - @WithMockUser 제거된 상태에서 테스트하려면 별도 테스트 클래스 필요

@@ -147,4 +147,16 @@ public class GifticonServiceImpl implements GifticonService {
             throw new FileProcessingException();
         }
     }
+
+    @Override
+    public ApiResponse<Long> countGifticon() {
+        try {
+            long count = gifticonRepository.count();
+            log.info("기프티콘 총 개수: {}", count);
+            return ApiResponse.success(count);
+        } catch (Exception e) {
+            log.info("기프티콘 개수 조회 중 오류 발생: {}", e.getMessage());
+            throw new FileProcessingException();
+        }
+    }
 }

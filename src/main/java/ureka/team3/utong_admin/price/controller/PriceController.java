@@ -21,4 +21,11 @@ public class PriceController {
     ) {
         return ResponseEntity.ok(priceService.updatePrice(id, priceDto));
     }
+
+    @GetMapping("/prices")
+    public ResponseEntity<ApiResponse<PriceDto>> getPrice(
+            @RequestParam(defaultValue = "903ee67c-71b3-432e-bbd1-aaf5d5043376") String id
+    ) {
+        return ResponseEntity.ok(priceService.getPrice(id));
+    }
 }

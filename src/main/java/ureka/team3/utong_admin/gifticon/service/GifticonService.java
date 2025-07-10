@@ -18,4 +18,6 @@ public interface GifticonService {
 
     ApiResponse<Void> deleteGifticon(String id);
 
+    ApiResponse<Long> countGifticon();
+
 }
