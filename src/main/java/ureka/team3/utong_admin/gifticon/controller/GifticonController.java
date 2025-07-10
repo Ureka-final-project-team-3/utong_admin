@@ -46,6 +46,11 @@ public class GifticonController {
     public ResponseEntity<ApiResponse<Void>> deleteGifticon(@PathVariable String id) {
         return ResponseEntity.ok(gifticonService.deleteGifticon(id));
     }
+
+    @GetMapping("/gifticons/count")
+    public ResponseEntity<ApiResponse<Long>> countGifticon() {
+        return ResponseEntity.ok(gifticonService.countGifticon());
+    }
 }
 
 
