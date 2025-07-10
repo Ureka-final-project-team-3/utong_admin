@@ -20,11 +20,9 @@ public class AdminSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
-            .csrf(csrf -> csrf.disable())
+            .csrf(csrf -> csrf.disable()) // CSRF 완전 비활성화
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/login", "/auth/login", "/css/**", "/js/**", "/images/**", "/actuator/**"
-//                        ,"/api/**"
-                )
+                .requestMatchers("/login", "/auth/login", "/css/**", "/js/**", "/images/**", "/actuator/**", "/api/**")
                 .permitAll()
                 .anyRequest().authenticated()
             )

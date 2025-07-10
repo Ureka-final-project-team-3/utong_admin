@@ -3,134 +3,253 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>관리자 대시보드</title>
+    <title>유통 관리자 대시보드</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        * {
             margin: 0;
             padding: 0;
-            background-color: #f8f9fa;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
         }
         
         .header {
-            background-color: #343a40;
-            color: white;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
             padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
         }
         
         .header h1 {
-            margin: 0;
-            font-size: 1.5rem;
+            color: #2c3e50;
+            font-size: 1.8rem;
+            font-weight: 600;
         }
         
         .user-info {
             display: flex;
             align-items: center;
             gap: 1rem;
+            color: #2c3e50;
+            font-weight: 500;
         }
         
         .logout-btn {
-            background-color: #dc3545;
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
             color: white;
-            padding: 0.5rem 1rem;
+            padding: 0.6rem 1.2rem;
             border: none;
-            border-radius: 4px;
+            border-radius: 25px;
             cursor: pointer;
             text-decoration: none;
             font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
         }
         
         .logout-btn:hover {
-            background-color: #c82333;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
         }
         
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 2rem auto;
-            padding: 0 1rem;
+            padding: 0 2rem;
         }
         
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-        
-        .card {
-            background: white;
-            border-radius: 8px;
-            padding: 1.5rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        
-        .card h3 {
-            margin-top: 0;
-            color: #333;
-            border-bottom: 2px solid #007bff;
-            padding-bottom: 0.5rem;
-        }
-        
-        .stat-number {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #007bff;
-        }
-        
-        .welcome-message {
-            background: linear-gradient(135deg, #007bff, #0056b3);
-            color: white;
+        .welcome-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
             padding: 2rem;
-            border-radius: 8px;
             margin-bottom: 2rem;
             text-align: center;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
         }
         
-        .welcome-message h2 {
-            margin: 0;
-            font-size: 1.8rem;
+        .welcome-section h2 {
+            color: #2c3e50;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
         }
         
-        .menu-grid {
+        .welcome-section p {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+
+        .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            margin: 0 auto 1rem;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .stat-card:nth-child(1) .stat-icon { background: linear-gradient(45deg, #3498db, #2980b9); }
+        .stat-card:nth-child(2) .stat-icon { background: linear-gradient(45deg, #27ae60, #229954); }
+        .stat-card:nth-child(3) .stat-icon { background: linear-gradient(45deg, #f39c12, #e67e22); }
+        .stat-card:nth-child(4) .stat-icon { background: linear-gradient(45deg, #9b59b6, #8e44ad); }
+
+        .stat-number {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .loading {
+            color: #95a5a6;
+            font-style: italic;
+        }
+
+        .management-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .management-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .management-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .management-card h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        .menu-items {
+            display: grid;
+            gap: 0.8rem;
+        }
+
+        .menu-item {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border: none;
+            border-radius: 12px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+
+        .menu-item:hover {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            transform: translateX(5px);
+        }
+
+        .menu-item h4 {
+            color: #2c3e50;
+            margin-bottom: 0.3rem;
+            font-size: 1rem;
+        }
+
+        .menu-item p {
+            color: #7f8c8d;
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
+        .refresh-btn {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 0.6rem 1.2rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
             margin-top: 1rem;
         }
-        
-        .menu-item {
-            background: white;
-            padding: 1rem;
-            border-radius: 6px;
-            text-align: center;
-            cursor: pointer;
-            transition: transform 0.2s;
-            border: 1px solid #e9ecef;
-        }
-        
-        .menu-item:hover {
+
+        .refresh-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
         }
-        
-        .menu-item h4 {
-            margin: 0.5rem 0;
-            color: #333;
-        }
-        
-        .menu-item p {
-            margin: 0;
-            color: #666;
-            font-size: 0.9rem;
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .management-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>관리자 대시보드</h1>
+        <h1>📊 유통 관리자 대시보드</h1>
         <div class="user-info">
             <span th:text="${adminEmail}">관리자</span>
             <a href="/auth/logout" class="logout-btn">로그아웃</a>
@@ -138,61 +257,345 @@
     </div>
     
     <div class="container">
-        <div class="welcome-message">
-            <h2>환영합니다!</h2>
-            <p>유통 관리자 페이지에 오신 것을 환영합니다.</p>
+        <div class="welcome-section">
+            <h2>관리자 대시보드</h2>
+            <p>유통 시스템의 실시간 현황을 확인하고 관리하세요</p>
         </div>
-        
-        <div class="dashboard-grid">
-            <div class="card">
-                <h3>시스템 현황</h3>
-                <div class="menu-grid">
-                    <div class="menu-item">
-                        <h4>사용자 관리</h4>
-                        <p>전체 사용자 조회 및 관리</p>
-                    </div>
-                    <div class="menu-item">
-                        <h4>상품 관리</h4>
-                        <p>상품 등록, 수정, 삭제</p>
-                    </div>
-                    <div class="menu-item">
-                        <h4>주문 관리</h4>
-                        <p>주문 현황 및 처리</p>
-                    </div>
-                    <div class="menu-item">
-                        <h4>통계</h4>
-                        <p>매출 및 사용자 통계</p>
-                    </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">👥</div>
+                <div class="stat-number" id="totalAccounts">-</div>
+                <div class="stat-label">총 계정 수</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📝</div>
+                <div class="stat-number" id="totalGroupCodes">-</div>
+                <div class="stat-label">그룹 코드 수</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🏷️</div>
+                <div class="stat-number" id="totalCodes">-</div>
+                <div class="stat-label">전체 코드 수</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">💰</div>
+                <div class="stat-number">활성</div>
+                <div class="stat-label">가격 정책</div>
+            </div>
+        </div>
+
+        <div class="management-grid">
+            <div class="management-card">
+                <h3>
+                    <div class="card-icon" style="background: linear-gradient(45deg, #3498db, #2980b9);">👥</div>
+                    사용자 관리
+                </h3>
+                <div class="menu-items">
+                    <button class="menu-item" onclick="navigateTo('/api/admin/accounts')">
+                        <h4>계정 목록 조회</h4>
+                        <p>전체 사용자 계정 정보 및 연결된 회선 정보 확인</p>
+                    </button>
+                    <button class="menu-item" onclick="openSearchModal()">
+                        <h4>계정 검색</h4>
+                        <p>이메일, 닉네임으로 특정 사용자 검색</p>
+                    </button>
                 </div>
             </div>
             
-            <div class="card">
-                <h3>오늘의 통계</h3>
-                <div style="text-align: center; padding: 1rem;">
-                    <div style="margin-bottom: 1rem;">
-                        <div class="stat-number">1,234</div>
-                        <div style="color: #666;">총 사용자</div>
-                    </div>
-                    <div style="margin-bottom: 1rem;">
-                        <div class="stat-number">56</div>
-                        <div style="color: #666;">오늘 가입</div>
-                    </div>
-                    <div>
-                        <div class="stat-number">₩2,345,678</div>
-                        <div style="color: #666;">오늘 매출</div>
-                    </div>
+            <div class="management-card">
+                <h3>
+                    <div class="card-icon" style="background: linear-gradient(45deg, #27ae60, #229954);">📝</div>
+                    코드 관리
+                </h3>
+                <div class="menu-items">
+                    <button class="menu-item" onclick="navigateTo('/api/admin/group-codes')">
+                        <h4>그룹 코드 관리</h4>
+                        <p>시스템에서 사용하는 그룹 코드 등록 및 관리</p>
+                    </button>
+                    <button class="menu-item" onclick="navigateTo('/api/admin/codes')">
+                        <h4>상세 코드 관리</h4>
+                        <p>각 그룹별 상세 코드 정보 관리</p>
+                    </button>
                 </div>
+            </div>
+            
+            <div class="management-card">
+                <h3>
+                    <div class="card-icon" style="background: linear-gradient(45deg, #f39c12, #e67e22);">💰</div>
+                    가격 정책
+                </h3>
+                <div class="menu-items">
+                    <button class="menu-item" onclick="navigateTo('/api/admin/prices')">
+                        <h4>가격 정책 수정</h4>
+                        <p>최소 가격, 수수료율, 세금 등 가격 정책 관리</p>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="management-card">
+                <h3>
+                    <div class="card-icon" style="background: linear-gradient(45deg, #9b59b6, #8e44ad);">📊</div>
+                    시스템 정보
+                </h3>
+                <div class="menu-items">
+                    <button class="menu-item" onclick="refreshStats()">
+                        <h4>통계 새로고침</h4>
+                        <p>대시보드 통계 정보를 최신 상태로 업데이트</p>
+                    </button>
+                    <button class="menu-item" onclick="showSystemInfo()">
+                        <h4>시스템 상태</h4>
+                        <p>서버 상태 및 데이터베이스 연결 확인</p>
+                    </button>
+                </div>
+                <button class="refresh-btn" onclick="refreshStats()">📊 통계 새로고침</button>
             </div>
         </div>
     </div>
-    
+
     <script>
-        // 메뉴 아이템 클릭 이벤트
-        document.querySelectorAll('.menu-item').forEach(item => {
-            item.addEventListener('click', function() {
-                const title = this.querySelector('h4').textContent;
-                alert(`${title} 기능은 준비 중입니다.`);
+        async function loadDashboardStats() {
+            try {
+                const accountsResponse = await fetch('/api/admin/accounts/count');
+                if (accountsResponse.ok) {
+                    const accountsData = await accountsResponse.json();
+                    document.getElementById('totalAccounts').textContent = accountsData.data?.toLocaleString() || '0';
+                } else {
+                    document.getElementById('totalAccounts').textContent = 'N/A';
+                }
+            } catch (error) {
+                console.error('계정 수 로딩 실패:', error);
+                document.getElementById('totalAccounts').textContent = 'Error';
+            }
+
+            try {
+                const groupCodesResponse = await fetch('/api/admin/group-codes/count');
+                if (groupCodesResponse.ok) {
+                    const groupCodesData = await groupCodesResponse.json();
+                    document.getElementById('totalGroupCodes').textContent = groupCodesData.data?.toLocaleString() || '0';
+                } else {
+                    document.getElementById('totalGroupCodes').textContent = 'N/A';
+                }
+            } catch (error) {
+                console.error('그룹 코드 수 로딩 실패:', error);
+                document.getElementById('totalGroupCodes').textContent = 'Error';
+            }
+
+            try {
+                const codesResponse = await fetch('/api/admin/codes/count');
+                if (codesResponse.ok) {
+                    const codesData = await codesResponse.json();
+                    document.getElementById('totalCodes').textContent = codesData.data?.toLocaleString() || '0';
+                } else {
+                    document.getElementById('totalCodes').textContent = 'N/A';
+                }
+            } catch (error) {
+                console.error('코드 수 로딩 실패:', error);
+                document.getElementById('totalCodes').textContent = 'Error';
+            }
+        }
+
+        function navigateTo(endpoint) {
+            const baseUrl = window.location.origin;
+            const fullUrl = baseUrl + endpoint;
+            
+            fetch(fullUrl)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.resultCode === 200) {
+                        showDataModal(endpoint, data.data);
+                    } else {
+                        alert('데이터를 불러오는데 실패했습니다: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('API 호출 중 오류가 발생했습니다.');
+                });
+        }
+
+        function showDataModal(endpoint, data) {
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                background: rgba(0,0,0,0.8); z-index: 1000;
+                display: flex; align-items: center; justify-content: center;
+            `;
+            
+            const content = document.createElement('div');
+            content.style.cssText = `
+                background: white; border-radius: 16px; padding: 2rem;
+                max-width: 80%; max-height: 80%; overflow: auto;
+                box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            `;
+            
+            let actionsHtml = '';
+            if (endpoint === '/api/admin/accounts' && Array.isArray(data)) {
+                // 실제 계정 ID들을 표시
+                const accountIds = data.map(account => account.id).slice(0, 5); // 처음 5개만
+                const accountOptions = accountIds.map(id => `<option value="${id}">${id}</option>`).join('');
+                
+                actionsHtml = `
+                    <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e9ecef;">
+                        <p style="color: #6c757d; font-size: 0.9rem; margin-bottom: 1rem;">계정을 선택하여 삭제할 수 있습니다:</p>
+                        <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
+                            <select id="deleteAccountSelect" style="flex: 1; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;">
+                                <option value="">계정 선택...</option>
+                                ${accountOptions}
+                            </select>
+                            <button onclick="deleteSelectedAccount()" 
+                                    style="background: #dc3545; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer;">삭제</button>
+                        </div>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <input type="text" id="deleteAccountId" placeholder="또는 직접 계정 ID 입력" 
+                                   style="flex: 1; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;">
+                            <button onclick="deleteAccountById()" 
+                                    style="background: #dc3545; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer;">삭제</button>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            content.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <h3 style="margin: 0; color: #2c3e50;">${endpoint} 데이터</h3>
+                    <button onclick="this.closest('div').remove()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">✕</button>
+                </div>
+                <pre style="background: #f8f9fa; padding: 1rem; border-radius: 8px; overflow: auto; max-height: 400px; font-size: 0.9rem;">${JSON.stringify(data, null, 2)}</pre>
+                ${actionsHtml}
+            `;
+            
+            modal.appendChild(content);
+            document.body.appendChild(modal);
+            
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) modal.remove();
             });
+
+            window.deleteSelectedAccount = () => {
+                const accountId = document.getElementById('deleteAccountSelect').value;
+                if (!accountId) {
+                    alert('계정을 선택하세요.');
+                    return;
+                }
+                deleteAccountFunction(accountId);
+            };
+
+            window.deleteAccountById = () => {
+                const accountId = document.getElementById('deleteAccountId').value.trim();
+                if (!accountId) {
+                    alert('계정 ID를 입력하세요.');
+                    return;
+                }
+                deleteAccountFunction(accountId);
+            };
+
+            function deleteAccountFunction(accountId) {
+                if (!confirm(`계정 "${accountId}"를 정말 삭제하시겠습니까?\n이 작업은 되돌릴 수 없습니다.`)) {
+                    return;
+                }
+                
+                fetch(`/api/admin/accounts/${accountId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => {
+                    console.log('Response status:', response.status);
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Response data:', data);
+                    if (data.resultCode === 200) {
+                        alert('계정이 성공적으로 삭제되었습니다.');
+                        modal.remove();
+                        refreshStats();
+                    } else {
+                        alert('삭제 실패: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('삭제 중 오류가 발생했습니다: ' + error.message);
+                });
+            }
+        }
+
+        function openSearchModal() {
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                background: rgba(0,0,0,0.8); z-index: 1000;
+                display: flex; align-items: center; justify-content: center;
+            `;
+            
+            const content = document.createElement('div');
+            content.style.cssText = `
+                background: white; border-radius: 16px; padding: 2rem;
+                width: 400px; box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            `;
+            
+            content.innerHTML = `
+                <h3 style="margin: 0 0 1rem 0; color: #2c3e50;">계정 검색</h3>
+                <input type="text" id="searchInput" placeholder="이메일 또는 닉네임을 입력하세요" 
+                       style="width: 100%; padding: 0.8rem; border: 2px solid #e9ecef; border-radius: 8px; margin-bottom: 1rem; font-size: 1rem;">
+                <div style="display: flex; gap: 0.5rem;">
+                    <button onclick="performSearch()" style="flex: 1; background: linear-gradient(45deg, #3498db, #2980b9); color: white; border: none; padding: 0.8rem; border-radius: 8px; cursor: pointer; font-weight: 500;">검색</button>
+                    <button onclick="this.closest('div').remove()" style="background: #95a5a6; color: white; border: none; padding: 0.8rem 1rem; border-radius: 8px; cursor: pointer;">취소</button>
+                </div>
+            `;
+            
+            modal.appendChild(content);
+            document.body.appendChild(modal);
+            
+            document.getElementById('searchInput').focus();
+            document.getElementById('searchInput').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') performSearch();
+            });
+            
+            window.performSearch = () => {
+                const keyword = document.getElementById('searchInput').value.trim();
+                if (!keyword) {
+                    alert('검색어를 입력하세요.');
+                    return;
+                }
+                
+                fetch(`/api/admin/accounts/search?keyword=${encodeURIComponent(keyword)}&pageNumber=0&pageSize=10`)
+                    .then(response => response.json())
+                    .then(data => {
+                        modal.remove();
+                        showDataModal('계정 검색 결과', data.data);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('검색 중 오류가 발생했습니다.');
+                    });
+            };
+        }
+
+        function refreshStats() {
+            document.getElementById('totalAccounts').textContent = '로딩중...';
+            document.getElementById('totalGroupCodes').textContent = '로딩중...';
+            document.getElementById('totalCodes').textContent = '로딩중...';
+            
+            loadDashboardStats();
+        }
+
+        function showSystemInfo() {
+            const info = {
+                시스템: 'Spring Boot 관리자 시스템',
+                버전: '1.0.0',
+                데이터베이스: 'MySQL',
+                현재시간: new Date().toLocaleString('ko-KR'),
+                상태: '정상 운영'
+            };
+            
+            showDataModal('시스템 정보', info);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadDashboardStats();
         });
     </script>
 </body>
