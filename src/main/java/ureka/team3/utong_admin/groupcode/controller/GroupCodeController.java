@@ -17,12 +17,14 @@ public class GroupCodeController {
     private final GroupCodeServiceImpl groupCodeService;
 
     @GetMapping("/group-codes")
-    public ResponseEntity<ApiResponse<List<GroupCodeDto>>> listGroupCode(int pageNumber, int pageSize) {
+    public ResponseEntity<ApiResponse<List<GroupCodeDto>>> listGroupCode(
+            @RequestParam(name = "pageNumber", defaultValue = "0") int pageNumber,
+            @RequestParam(name = "pageSize", defaultValue = "10") int pageSize) {
         return ResponseEntity.ok(groupCodeService.listGroupCode(pageNumber, pageSize));
     }
 
     @GetMapping("/group-codes/{groupCode}")
-    public ResponseEntity<ApiResponse<GroupCodeDto>> getGroupCode(@PathVariable String groupCode) {
+    public ResponseEntity<ApiResponse<GroupCodeDto>> getGroupCode(@PathVariable("groupCode") String groupCode) {
         return ResponseEntity.ok(groupCodeService.detailGroupCode(groupCode));
     }
 
@@ -38,14 +40,14 @@ public class GroupCodeController {
 
     @PutMapping("/group-codes/{groupCode}")
     public ResponseEntity<ApiResponse<Void>> updateGroupCode(
-            @PathVariable String groupCode,
+            @PathVariable("groupCode") String groupCode,
             @RequestBody GroupCodeDto groupCodeDto
     ) {
         return ResponseEntity.ok(groupCodeService.updateGroupCode(groupCode, groupCodeDto));
     }
 
     @DeleteMapping("/group-codes/{groupCode}")
-    public ResponseEntity<ApiResponse<Void>> deleteGroupCode(@PathVariable String groupCode) {
+    public ResponseEntity<ApiResponse<Void>> deleteGroupCode(@PathVariable("groupCode") String groupCode) {
         return ResponseEntity.ok(groupCodeService.deleteGroupCode(groupCode));
     }
 }
