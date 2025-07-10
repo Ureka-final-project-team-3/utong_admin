@@ -131,6 +131,7 @@
         .stat-card:nth-child(2) .stat-icon { background: linear-gradient(45deg, #27ae60, #229954); }
         .stat-card:nth-child(3) .stat-icon { background: linear-gradient(45deg, #f39c12, #e67e22); }
         .stat-card:nth-child(4) .stat-icon { background: linear-gradient(45deg, #9b59b6, #8e44ad); }
+        .stat-card:nth-child(5) .stat-icon { background: linear-gradient(45deg, #e74c3c, #c0392b); }
 
         .stat-number {
             font-size: 2.2rem;
@@ -693,7 +694,114 @@
             background: linear-gradient(45deg, #e67e22, #d35400);
         }
 
-        /* Modal Form Styles */
+        .btn-info {
+            background: linear-gradient(45deg, #17a2b8, #138496);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(23, 162, 184, 0.2);
+        }
+
+        .btn-info:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(23, 162, 184, 0.4);
+            background: linear-gradient(45deg, #138496, #117a8b);
+        }
+
+        /* Code Card Styles */
+        .code-card {
+            background: white;
+            border-radius: 16px;
+            padding: 1.8rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e9ecef;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .code-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #f39c12, #e67e22);
+        }
+
+        .code-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+            gap: 1.5rem;
+        }
+
+        .code-main-info {
+            flex: 1;
+        }
+
+        .code-id {
+            font-size: 0.9rem;
+            color: #fff;
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+
+        .code-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.3px;
+        }
+
+        .code-brief {
+            color: #6c757d;
+            font-size: 1rem;
+            line-height: 1.5;
+            padding: 0.5rem 0.8rem;
+            background: rgba(243, 156, 18, 0.1);
+            border-radius: 8px;
+            border-left: 3px solid #f39c12;
+            margin-bottom: 0.8rem;
+        }
+
+        .code-order {
+            display: inline-block;
+            background: linear-gradient(135deg, #e9ecef, #dee2e6);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .code-actions {
+            display: flex;
+            gap: 0.8rem;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        /* Form Styles */
         .form-group {
             margin-bottom: 1.5rem;
         }
@@ -737,6 +845,21 @@
             box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
         }
 
+        .form-select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-select:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+        }
+
         .modal-form-actions {
             display: flex;
             gap: 1rem;
@@ -744,17 +867,196 @@
             margin-top: 2rem;
             padding-top: 1.5rem;
             border-top: 1px solid #e9ecef;
-        
-            background: #f8f9fa;
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            max-height: 400px;
-            overflow: auto;
+        }
+
+        /* Price Policy Styles */
+        .price-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             border: 1px solid #e9ecef;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .price-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #9b59b6, #8e44ad);
+        }
+
+        .price-form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* Gifticon Card Styles */
+        .gifticon-card {
+            background: white;
+            border-radius: 16px;
+            padding: 1.8rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e9ecef;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gifticon-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #e74c3c, #c0392b);
+        }
+
+        .gifticon-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .gifticon-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+            gap: 1.5rem;
+        }
+
+        .gifticon-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 12px;
+            object-fit: cover;
+            border: 3px solid #dee2e6;
+        }
+
+        .gifticon-main-info {
+            flex: 1;
+        }
+
+        .gifticon-id {
+            font-size: 0.8rem;
+            color: #fff;
             font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            padding: 0.4rem 0.8rem;
+            border-radius: 15px;
+            display: inline-block;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+
+        .gifticon-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.3px;
+        }
+
+        .gifticon-desc {
+            color: #6c757d;
+            font-size: 1rem;
             line-height: 1.5;
+            padding: 0.5rem 0.8rem;
+            background: rgba(231, 76, 60, 0.1);
+            border-radius: 8px;
+            border-left: 3px solid #e74c3c;
+            margin-bottom: 0.8rem;
+        }
+
+        .gifticon-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #e74c3c;
+            background: rgba(231, 76, 60, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        .gifticon-actions {
+            display: flex;
+            gap: 0.8rem;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        /* File Upload Styles */
+        .file-upload {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .file-upload input[type=file] {
+            position: absolute;
+            left: -9999px;
+        }
+
+        .file-upload-label {
+            display: block;
+            padding: 1rem;
+            border: 2px dashed #e9ecef;
+            border-radius: 8px;
+            text-align: center;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .file-upload-label:hover {
+            border-color: #007bff;
+            background: rgba(0, 123, 255, 0.1);
+        }
+
+        .file-upload-text {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+        /* Pagination Styles */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 2rem 0;
+        }
+
+        .pagination button {
+            padding: 0.5rem 1rem;
+            border: 1px solid #dee2e6;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .pagination button:hover {
+            background: #f8f9fa;
+            border-color: #007bff;
+        }
+
+        .pagination button.active {
+            background: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+
+        .pagination button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
 
         /* Responsive Design */
@@ -783,235 +1085,919 @@
             .search-modal .modal-content {
                 width: calc(100% - 2rem);
             }
+
+            .gifticon-header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .gifticon-image {
+                width: 100px;
+                height: 100px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>유통 관리자 대시보드</h1>
-        <div class="user-info">
-            <span th:text="${adminEmail}">관리자</span>
-            <a href="/auth/logout" class="logout-btn">로그아웃</a>
+<div class="header">
+    <h1>유통 관리자 대시보드</h1>
+    <div class="user-info">
+        <span>관리자</span>
+        <a href="/auth/logout" class="logout-btn">로그아웃</a>
+    </div>
+</div>
+
+<div class="container">
+    <div class="welcome-section">
+        <h2>관리자 대시보드</h2>
+        <p>유통 시스템의 실시간 현황을 확인하고 관리하세요</p>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon">👥</div>
+            <div class="stat-number" id="totalAccounts">-</div>
+            <div class="stat-label">총 계정 수</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">📝</div>
+            <div class="stat-number" id="totalGroupCodes">-</div>
+            <div class="stat-label">그룹 코드 수</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">🏷️</div>
+            <div class="stat-number" id="totalCodes">-</div>
+            <div class="stat-label">전체 코드 수</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">🎁</div>
+            <div class="stat-number" id="totalGifticons">-</div>
+            <div class="stat-label">기프티콘 수</div>
         </div>
     </div>
 
-    <div class="container">
-        <div class="welcome-section">
-            <h2>관리자 대시보드</h2>
-            <p>유통 시스템의 실시간 현황을 확인하고 관리하세요</p>
-        </div>
-
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-icon">👥</div>
-                <div class="stat-number" id="totalAccounts">-</div>
-                <div class="stat-label">총 계정 수</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon">📝</div>
-                <div class="stat-number" id="totalGroupCodes">-</div>
-                <div class="stat-label">그룹 코드 수</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon">🏷️</div>
-                <div class="stat-number" id="totalCodes">-</div>
-                <div class="stat-label">전체 코드 수</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon">💰</div>
-                <div class="stat-number">활성</div>
-                <div class="stat-label">가격 정책</div>
+    <div class="management-grid">
+        <div class="management-card">
+            <h3>
+                <div class="card-icon" style="background: linear-gradient(45deg, #3498db, #2980b9);">👥</div>
+                사용자 관리
+            </h3>
+            <div class="menu-items">
+                <button class="menu-item" onclick="loadAccounts()">
+                    <h4>계정 목록 조회</h4>
+                    <p>전체 사용자 계정 정보 및 연결된 회선 정보 확인</p>
+                </button>
+                <button class="menu-item" onclick="openSearchModal()">
+                    <h4>계정 검색</h4>
+                    <p>이메일, 닉네임으로 특정 사용자 검색</p>
+                </button>
             </div>
         </div>
 
-        <div class="management-grid">
-            <div class="management-card">
-                <h3>
-                    <div class="card-icon" style="background: linear-gradient(45deg, #3498db, #2980b9);">👥</div>
-                    사용자 관리
-                </h3>
-                <div class="menu-items">
-                    <button class="menu-item" onclick="loadAccounts()">
-                        <h4>계정 목록 조회</h4>
-                        <p>전체 사용자 계정 정보 및 연결된 회선 정보 확인</p>
-                    </button>
-                    <button class="menu-item" onclick="openSearchModal()">
-                        <h4>계정 검색</h4>
-                        <p>이메일, 닉네임으로 특정 사용자 검색</p>
-                    </button>
-                </div>
+        <div class="management-card">
+            <h3>
+                <div class="card-icon" style="background: linear-gradient(45deg, #27ae60, #229954);">📝</div>
+                코드 관리
+            </h3>
+            <div class="menu-items">
+                <button class="menu-item" onclick="loadGroupCodes()">
+                    <h4>그룹 코드 관리</h4>
+                    <p>시스템에서 사용하는 그룹 코드 등록 및 관리</p>
+                </button>
+                <button class="menu-item" onclick="openCodeManagementModal()">
+                    <h4>상세 코드 관리</h4>
+                    <p>각 그룹별 상세 코드 정보 관리</p>
+                </button>
             </div>
+        </div>
 
-            <div class="management-card">
-                <h3>
-                    <div class="card-icon" style="background: linear-gradient(45deg, #27ae60, #229954);">📝</div>
-                    코드 관리
-                </h3>
-                <div class="menu-items">
-                    <button class="menu-item" onclick="loadGroupCodes()">
-                        <h4>그룹 코드 관리</h4>
-                        <p>시스템에서 사용하는 그룹 코드 등록 및 관리</p>
-                    </button>
-                    <button class="menu-item" onclick="loadCodes()">
-                        <h4>상세 코드 관리</h4>
-                        <p>각 그룹별 상세 코드 정보 관리</p>
-                    </button>
-                </div>
+        <div class="management-card">
+            <h3>
+                <div class="card-icon" style="background: linear-gradient(45deg, #f39c12, #e67e22);">💰</div>
+                가격 정책
+            </h3>
+            <div class="menu-items">
+                <button class="menu-item" onclick="loadPrices()">
+                    <h4>가격 정책 수정</h4>
+                    <p>최소 가격, 최소 가격 비율, 수수료 등 가격 정책 관리</p>
+                </button>
             </div>
+        </div>
 
-            <div class="management-card">
-                <h3>
-                    <div class="card-icon" style="background: linear-gradient(45deg, #f39c12, #e67e22);">💰</div>
-                    가격 정책
-                </h3>
-                <div class="menu-items">
-                    <button class="menu-item" onclick="loadPrices()">
-                        <h4>가격 정책 수정</h4>
-                        <p>최소 가격, 수수료율, 세금 등 가격 정책 관리</p>
-                    </button>
-                </div>
-            </div>
-
-            <div class="management-card">
-                <h3>
-                    <div class="card-icon" style="background: linear-gradient(45deg, #9b59b6, #8e44ad);">📊</div>
-                    시스템 정보
-                </h3>
-                <div class="menu-items">
-                    <button class="menu-item" onclick="refreshStats()">
-                        <h4>통계 새로고침</h4>
-                        <p>대시보드 통계 정보를 최신 상태로 업데이트</p>
-                    </button>
-                    <button class="menu-item" onclick="showSystemInfo()">
-                        <h4>시스템 상태</h4>
-                        <p>서버 상태 및 데이터베이스 연결 확인</p>
-                    </button>
-                </div>
-                <button class="refresh-btn" onclick="refreshStats()">통계 새로고침</button>
+        <div class="management-card">
+            <h3>
+                <div class="card-icon" style="background: linear-gradient(45deg, #e74c3c, #c0392b);">🎁</div>
+                기프티콘 관리
+            </h3>
+            <div class="menu-items">
+                <button class="menu-item" onclick="loadGifticons()">
+                    <h4>기프티콘 목록</h4>
+                    <p>등록된 기프티콘 조회 및 관리</p>
+                </button>
+                <button class="menu-item" onclick="openCreateGifticonModal()">
+                    <h4>기프티콘 추가</h4>
+                    <p>새로운 기프티콘 상품 등록</p>
+                </button>
             </div>
         </div>
     </div>
+</div>
 
-    <script>
-        // 통계 로딩
-        async function loadDashboardStats() {
-            try {
-                const [accountsRes, groupCodesRes, codesRes] = await Promise.all([
-                    fetch('/api/admin/accounts/count'),
-                    fetch('/api/admin/group-codes/count'),
-                    fetch('/api/admin/codes/count')
-                ]);
+<script>
+    // 통계 로딩
+    async function loadDashboardStats() {
+        try {
+            const [accountsRes, groupCodesRes, codesRes, gifticonsRes] = await Promise.all([
+                fetch('/api/admin/accounts/count'),
+                fetch('/api/admin/group-codes/count'),
+                fetch('/api/admin/codes/count'),
+                fetch('/api/admin/gifticons/count')
+            ]);
 
-                if (accountsRes.ok) {
-                    const data = await accountsRes.json();
-                    document.getElementById('totalAccounts').textContent = data.data?.toLocaleString() || '0';
-                } else {
-                    document.getElementById('totalAccounts').textContent = 'N/A';
-                }
-
-                if (groupCodesRes.ok) {
-                    const data = await groupCodesRes.json();
-                    document.getElementById('totalGroupCodes').textContent = data.data?.toLocaleString() || '0';
-                } else {
-                    document.getElementById('totalGroupCodes').textContent = 'N/A';
-                }
-
-                if (codesRes.ok) {
-                    const data = await codesRes.json();
-                    document.getElementById('totalCodes').textContent = data.data?.toLocaleString() || '0';
-                } else {
-                    document.getElementById('totalCodes').textContent = 'N/A';
-                }
-            } catch (error) {
-                console.error('통계 로딩 실패:', error);
-                document.getElementById('totalAccounts').textContent = 'Error';
-                document.getElementById('totalGroupCodes').textContent = 'Error';
-                document.getElementById('totalCodes').textContent = 'Error';
-            }
-        }
-
-        // 계정 목록 로딩
-        async function loadAccounts() {
-            console.log('loadAccounts 함수 호출됨');
-            try {
-                const response = await fetch('/api/admin/accounts?pageNumber=0&pageSize=20');
-                const data = await response.json();
-                
-                console.log('API 응답 데이터:', data);
-                
-                if (data.resultCode === 200) {
-                    console.log('showAccountsModal 호출 전, 데이터:', data.data);
-                    showAccountsModal(data.data);
-                } else {
-                    alert('계정 목록을 불러오는데 실패했습니다: ' + data.message);
-                }
-            } catch (error) {
-                console.error('계정 로딩 실패:', error);
-                alert('계정 목록 로딩 중 오류가 발생했습니다.');
-            }
-        }
-
-        // 그룹 코드 목록 로딩
-        async function loadGroupCodes() {
-            try {
-                const response = await fetch('/api/admin/group-codes?pageNumber=0&pageSize=20');
-                const data = await response.json();
-                
-                if (data.resultCode === 200) {
-                    showGroupCodesModal(data.data);
-                } else {
-                    alert('그룹 코드 목록을 불러오는데 실패했습니다: ' + data.message);
-                }
-            } catch (error) {
-                console.error('그룹 코드 로딩 실패:', error);
-                alert('그룹 코드 목록 로딩 중 오류가 발생했습니다.');
-            }
-        }
-
-        // 코드 목록 로딩
-        async function loadCodes() {
-            try {
-                const response = await fetch('/api/admin/codes?groupCode=010&pageNumber=0&pageSize=20');
-                const data = await response.json();
-                
-                if (data.resultCode === 200) {
-                    showGenericModal('코드 목록', data.data);
-                } else {
-                    alert('코드 목록을 불러오는데 실패했습니다: ' + data.message);
-                }
-            } catch (error) {
-                console.error('코드 로딩 실패:', error);
-                alert('코드 목록 로딩 중 오류가 발생했습니다.');
-            }
-        }
-
-        // 가격 정책 로딩
-        async function loadPrices() {
-            showGenericModal('가격 정책', { message: '가격 정책 API는 아직 구현되지 않았습니다.' });
-        }
-
-        // 계정 모달 표시
-        function showAccountsModal(accounts) {
-            console.log('showAccountsModal 함수 호출됨');
-            console.log('받은 accounts 데이터:', accounts);
-            
-            const modal = createModal('계정 목록');
-            const body = modal.querySelector('.modal-body');
-            
-            if (!accounts || accounts.length === 0) {
-                console.log('계정이 없음');
-                body.innerHTML = '<div class="no-data">표시할 계정이 없습니다.</div>';
+            if (accountsRes.ok) {
+                const data = await accountsRes.json();
+                document.getElementById('totalAccounts').textContent = data.data?.toLocaleString() || '0';
             } else {
-                console.log('계정 개수:', accounts.length);
-                // 계정 개수 표시
-                const accountCount = `<div style="margin-bottom: 1.5rem; padding: 1rem; background: linear-gradient(135deg, #e8f4fd, #d1ecf1); border-radius: 12px; border-left: 4px solid #17a2b8;">
+                document.getElementById('totalAccounts').textContent = 'N/A';
+            }
+
+            if (groupCodesRes.ok) {
+                const data = await groupCodesRes.json();
+                document.getElementById('totalGroupCodes').textContent = data.data?.toLocaleString() || '0';
+            } else {
+                document.getElementById('totalGroupCodes').textContent = 'N/A';
+            }
+
+            if (codesRes.ok) {
+                const data = await codesRes.json();
+                document.getElementById('totalCodes').textContent = data.data?.toLocaleString() || '0';
+            } else {
+                document.getElementById('totalCodes').textContent = 'N/A';
+            }
+
+            if (gifticonsRes.ok) {
+                const data = await gifticonsRes.json();
+                document.getElementById('totalGifticons').textContent = data.data?.toLocaleString() || '0';
+            } else {
+                document.getElementById('totalGifticons').textContent = 'N/A';
+            }
+        } catch (error) {
+            console.error('통계 로딩 실패:', error);
+            document.getElementById('totalAccounts').textContent = 'Error';
+            document.getElementById('totalGroupCodes').textContent = 'Error';
+            document.getElementById('totalCodes').textContent = 'Error';
+            document.getElementById('totalGifticons').textContent = 'Error';
+        }
+    }
+
+    // 계정 목록 로딩
+    async function loadAccounts() {
+        try {
+            const response = await fetch('/api/admin/accounts?pageNumber=0&pageSize=20');
+            const data = await response.json();
+
+            if (data.resultCode === 200) {
+                showAccountsModal(data.data);
+            } else {
+                alert('계정 목록을 불러오는데 실패했습니다: ' + data.message);
+            }
+        } catch (error) {
+            console.error('계정 로딩 실패:', error);
+            alert('계정 목록 로딩 중 오류가 발생했습니다.');
+        }
+    }
+
+    // 그룹 코드 목록 로딩
+    async function loadGroupCodes() {
+        try {
+            const response = await fetch('/api/admin/group-codes?pageNumber=0&pageSize=20');
+            const data = await response.json();
+
+            if (data.resultCode === 200) {
+                showGroupCodesModal(data.data);
+            } else {
+                alert('그룹 코드 목록을 불러오는데 실패했습니다: ' + data.message);
+            }
+        } catch (error) {
+            console.error('그룹 코드 로딩 실패:', error);
+            alert('그룹 코드 목록 로딩 중 오류가 발생했습니다.');
+        }
+    }
+
+    // 코드 관리 모달 열기
+    function openCodeManagementModal() {
+        const modal = createModal('코드 관리');
+        const body = modal.querySelector('.modal-body');
+
+        body.innerHTML = `
+                <div style="margin-bottom: 2rem;">
+                    <label class="form-label">그룹 코드 선택</label>
+                    <select id="groupCodeSelect" class="form-select" onchange="loadCodesByGroup()">
+                        <option value="">그룹 코드를 선택하세요</option>
+                    </select>
+                </div>
+                <div id="codesContainer">
+                    <div class="no-data">그룹 코드를 선택하면 해당 코드들이 표시됩니다.</div>
+                </div>
+            `;
+
+        document.body.appendChild(modal);
+        loadGroupCodeOptions();
+    }
+
+    // 그룹 코드 옵션 로딩
+    async function loadGroupCodeOptions() {
+        try {
+            const response = await fetch('/api/admin/group-codes?pageNumber=0&pageSize=100');
+            const data = await response.json();
+
+            if (data.resultCode === 200) {
+                const select = document.getElementById('groupCodeSelect');
+                data.data.forEach(groupCode => {
+                    const option = document.createElement('option');
+                    option.value = groupCode.groupCode;
+                    option.textContent = `${groupCode.groupCode} - ${groupCode.groupCodeName}`;
+                    select.appendChild(option);
+                });
+            }
+        } catch (error) {
+            console.error('그룹 코드 옵션 로딩 실패:', error);
+        }
+    }
+
+    // 그룹별 코드 로딩
+    async function loadCodesByGroup() {
+        const groupCode = document.getElementById('groupCodeSelect').value;
+        const container = document.getElementById('codesContainer');
+
+        if (!groupCode) {
+            container.innerHTML = '<div class="no-data">그룹 코드를 선택하면 해당 코드들이 표시됩니다.</div>';
+            return;
+        }
+
+        try {
+            const response = await fetch(`/api/admin/codes?groupCode=${groupCode}&pageNumber=0&pageSize=50`);
+            const data = await response.json();
+
+            if (data.resultCode === 200) {
+                showCodesInContainer(data.data, groupCode);
+            } else {
+                container.innerHTML = '<div class="no-data">코드를 불러오는데 실패했습니다.</div>';
+            }
+        } catch (error) {
+            console.error('코드 로딩 실패:', error);
+            container.innerHTML = '<div class="no-data">코드 로딩 중 오류가 발생했습니다.</div>';
+        }
+    }
+
+    // 코드 컨테이너에 표시
+    function showCodesInContainer(codes, groupCode) {
+        const container = document.getElementById('codesContainer');
+
+        if (!codes || codes.length === 0) {
+            container.innerHTML = `
+                    <div class="no-data">이 그룹에 등록된 코드가 없습니다.</div>
+                    <div style="text-align: center; margin-top: 2rem;">
+                        <button class="btn-success" onclick="openCreateCodeModal('${groupCode}')">➕ 새 코드 추가</button>
+                    </div>
+                `;
+            return;
+        }
+
+        const headerSection = `
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; padding: 1rem; background: linear-gradient(135deg, #fff3cd, #ffeaa7); border-radius: 12px; border-left: 4px solid #f39c12;">
+                    <strong style="color: #856404; font-size: 1.1rem;">🏷️ 총 ${codes.length}개의 코드</strong>
+                    <button class="btn-success" onclick="openCreateCodeModal('${groupCode}')">➕ 새 코드 추가</button>
+                </div>
+            `;
+
+        const codeCards = codes.map(code => `
+                <div class="code-card">
+                    <div class="code-header">
+                        <div class="code-main-info">
+                            <div class="code-id">🏷️ ${code.groupCode}-${code.code}</div>
+                            <div class="code-name">📝 ${code.codeName}</div>
+                            ${code.codeNameBrief ? `<div class="code-brief">💬 ${code.codeNameBrief}</div>` : ''}
+                            <div class="code-order">📊 순서: ${code.orderNo}</div>
+                        </div>
+                        <div class="code-actions">
+                            <button class="btn-warning" onclick="openEditCodeModal('${code.groupCode}', '${code.code}', '${code.codeName}', '${code.codeNameBrief || ''}', ${code.orderNo})" title="코드 수정">✏️ 수정</button>
+                            <button class="btn-danger" onclick="deleteCode('${code.groupCode}', '${code.code}')" title="코드 삭제">🗑️ 삭제</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+        container.innerHTML = headerSection + codeCards;
+    }
+
+    // 코드 생성 모달
+    function openCreateCodeModal(groupCode) {
+        const modal = createModal('새 코드 추가');
+        const body = modal.querySelector('.modal-body');
+
+        body.innerHTML = `
+                <form id="createCodeForm">
+                    <div class="form-group">
+                        <label class="form-label">📋 그룹 코드</label>
+                        <input type="text" id="newCodeGroupCode" class="form-input" value="${groupCode}" readonly style="background-color: #f8f9fa;">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">🏷️ 코드 (3자리)</label>
+                        <input type="text" id="newCode" class="form-input" placeholder="예: 001" maxlength="3" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">📝 코드명</label>
+                        <input type="text" id="newCodeName" class="form-input" placeholder="예: 거래완료" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">💬 간략명</label>
+                        <input type="text" id="newCodeNameBrief" class="form-input" placeholder="예: 완료">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">📊 정렬순서</label>
+                        <input type="number" id="newCodeOrder" class="form-input" value="1" min="0" required>
+                    </div>
+                    <div class="modal-form-actions">
+                        <button type="button" class="btn-secondary" onclick="this.closest('.modal-overlay').remove()">취소</button>
+                        <button type="submit" class="btn-success">✅ 생성</button>
+                    </div>
+                </form>
+            `;
+
+        document.body.appendChild(modal);
+
+        // 폼 제출 이벤트
+        document.getElementById('createCodeForm').addEventListener('submit', createCode);
+    }
+
+    // 코드 수정 모달
+    function openEditCodeModal(groupCode, code, codeName, codeNameBrief, orderNo) {
+        const modal = createModal('코드 수정');
+        const body = modal.querySelector('.modal-body');
+
+        body.innerHTML = `
+                <form id="editCodeForm">
+                    <div class="form-group">
+                        <label class="form-label">📋 그룹 코드</label>
+                        <input type="text" id="editCodeGroupCode" class="form-input" value="${groupCode}" readonly style="background-color: #f8f9fa;">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">🏷️ 코드</label>
+                        <input type="text" id="editCode" class="form-input" value="${code}" readonly style="background-color: #f8f9fa;">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">📝 코드명</label>
+                        <input type="text" id="editCodeName" class="form-input" value="${codeName}" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">💬 간략명</label>
+                        <input type="text" id="editCodeNameBrief" class="form-input" value="${codeNameBrief}">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">📊 정렬순서</label>
+                        <input type="number" id="editCodeOrder" class="form-input" value="${orderNo}" min="0" required>
+                    </div>
+                    <div class="modal-form-actions">
+                        <button type="button" class="btn-secondary" onclick="this.closest('.modal-overlay').remove()">취소</button>
+                        <button type="submit" class="btn-warning">✏️ 수정</button>
+                    </div>
+                </form>
+            `;
+
+        document.body.appendChild(modal);
+
+        // 폼 제출 이벤트
+        document.getElementById('editCodeForm').addEventListener('submit', (e) => updateCode(e, groupCode, code));
+    }
+
+    // 코드 생성
+    async function createCode(e) {
+        e.preventDefault();
+
+        const groupCode = document.getElementById('newCodeGroupCode').value.trim();
+        const code = document.getElementById('newCode').value.trim();
+        const codeName = document.getElementById('newCodeName').value.trim();
+        const codeNameBrief = document.getElementById('newCodeNameBrief').value.trim();
+        const orderNo = parseInt(document.getElementById('newCodeOrder').value);
+
+        if (!code || !codeName) {
+            alert('코드와 코드명은 필수입니다.');
+            return;
+        }
+
+        if (code.length !== 3) {
+            alert('코드는 정확히 3자리여야 합니다.');
+            return;
+        }
+
+        try {
+            const response = await fetch('/api/admin/codes', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    groupCode: groupCode,
+                    code: code,
+                    codeName: codeName,
+                    codeNameBrief: codeNameBrief,
+                    orderNo: orderNo
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.resultCode === 200) {
+                alert('코드가 성공적으로 생성되었습니다.');
+                document.querySelector('.modal-overlay').remove();
+                loadCodesByGroup(); // 목록 새로고침
+                refreshStats();
+            } else {
+                alert('생성 실패: ' + data.message);
+            }
+        } catch (error) {
+            console.error('코드 생성 실패:', error);
+            alert('생성 중 오류가 발생했습니다: ' + error.message);
+        }
+    }
+
+    // 코드 수정
+    async function updateCode(e, groupCode, code) {
+        e.preventDefault();
+
+        const codeName = document.getElementById('editCodeName').value.trim();
+        const codeNameBrief = document.getElementById('editCodeNameBrief').value.trim();
+        const orderNo = parseInt(document.getElementById('editCodeOrder').value);
+
+        if (!codeName) {
+            alert('코드명은 필수입니다.');
+            return;
+        }
+
+        try {
+            const response = await fetch(`/api/admin/codes/${groupCode}/${code}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    groupCode: groupCode,
+                    code: code,
+                    codeName: codeName,
+                    codeNameBrief: codeNameBrief,
+                    orderNo: orderNo
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.resultCode === 200) {
+                alert('코드가 성공적으로 수정되었습니다.');
+                document.querySelector('.modal-overlay').remove();
+                loadCodesByGroup(); // 목록 새로고침
+            } else {
+                alert('수정 실패: ' + data.message);
+            }
+        } catch (error) {
+            console.error('코드 수정 실패:', error);
+            alert('수정 중 오류가 발생했습니다: ' + error.message);
+        }
+    }
+
+    // 코드 삭제
+    async function deleteCode(groupCode, code) {
+        if (!confirm(`코드 "${groupCode}-${code}"를 정말 삭제하시겠습니까?\n이 작업은 되돌릴 수 없습니다.`)) {
+            return;
+        }
+
+        try {
+            const response = await fetch(`/api/admin/codes/${groupCode}/${code}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            const data = await response.json();
+
+            if (data.resultCode === 200) {
+                alert('코드가 성공적으로 삭제되었습니다.');
+                loadCodesByGroup(); // 목록 새로고침
+                refreshStats();
+            } else {
+                alert('삭제 실패: ' + data.message);
+            }
+        } catch (error) {
+            console.error('코드 삭제 실패:', error);
+            alert('삭제 중 오류가 발생했습니다: ' + error.message);
+        }
+    }
+
+    // 가격 정책 로딩
+    async function loadPrices() {
+        try {
+            const response = await fetch('/api/admin/prices');
+            const data = await response.json();
+
+            if (data.resultCode === 200) {
+                showPriceModal(data.data);
+            } else {
+                alert('가격 정책을 불러오는데 실패했습니다: ' + data.message);
+            }
+        } catch (error) {
+            console.error('가격 정책 로딩 실패:', error);
+            alert('가격 정책 로딩 중 오류가 발생했습니다.');
+        }
+    }
+
+    // 가격 정책 모달 표시
+    function showPriceModal(priceData) {
+        const modal = createModal('가격 정책 관리');
+        const body = modal.querySelector('.modal-body');
+
+        body.innerHTML = `
+                <div class="price-card">
+                    <h3 style="margin-bottom: 2rem; color: #2c3e50; text-align: center;">💰 가격 정책 설정</h3>
+                    <form id="priceForm" class="price-form-grid">
+                        <div class="form-group">
+                            <label class="form-label">💵 최소 가격 (원)</label>
+                            <input type="number" id="minimumPrice" class="form-input" value="${priceData?.minimumPrice || 0}" min="0" step="100" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">📊 최소 가격 비율 (%)</label>
+                            <input type="number" id="minimumRate" class="form-input" value="${priceData?.minimumRate || 0}" min="0" max="100" step="0.1" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">🏛️ 수수료 (%)</label>
+                            <input type="number" id="tax" class="form-input" value="${priceData?.tax || 0}" min="0" max="100" step="0.1" required>
+                        </div>
+                    </form>
+                    <div class="modal-form-actions">
+                        <button type="button" class="btn-secondary" onclick="this.closest('.modal-overlay').remove()">취소</button>
+                        <button type="button" class="btn-success" onclick="updatePrice()">💾 저장</button>
+                    </div>
+                </div>
+            `;
+
+        document.body.appendChild(modal);
+    }
+
+    // 가격 정책 업데이트
+    async function updatePrice() {
+        const minimumPrice = parseInt(document.getElementById('minimumPrice').value);
+        const minimumRate = parseFloat(document.getElementById('minimumRate').value);
+        const tax = parseFloat(document.getElementById('tax').value);
+
+        if (isNaN(minimumPrice) || isNaN(minimumRate) || isNaN(tax)) {
+            alert('모든 필드를 올바르게 입력해주세요.');
+            return;
+        }
+
+        try {
+            const response = await fetch('/api/admin/prices', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    minimumPrice: minimumPrice,
+                    minimumRate: minimumRate,
+                    tax: tax
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.resultCode === 200) {
+                alert('가격 정책이 성공적으로 업데이트되었습니다.');
+                document.querySelector('.modal-overlay').remove();
+            } else {
+                alert('업데이트 실패: ' + data.message);
+            }
+        } catch (error) {
+            console.error('가격 정책 업데이트 실패:', error);
+            alert('업데이트 중 오류가 발생했습니다: ' + error.message);
+        }
+    }
+
+    // 기프티콘 목록 로딩
+    async function loadGifticons() {
+        try {
+            const response = await fetch('/api/admin/gifticons?pageNumber=0&pageSize=20');
+            const data = await response.json();
+
+            if (data.resultCode === 200) {
+                showGifticonsModal(data.data);
+            } else {
+                alert('기프티콘 목록을 불러오는데 실패했습니다: ' + data.message);
+            }
+        } catch (error) {
+            console.error('기프티콘 로딩 실패:', error);
+            alert('기프티콘 목록 로딩 중 오류가 발생했습니다.');
+        }
+    }
+
+    // 기프티콘 모달 표시
+    function showGifticonsModal(gifticons) {
+        const modal = createModal('기프티콘 관리');
+        const body = modal.querySelector('.modal-body');
+
+        if (!gifticons || gifticons.length === 0) {
+            body.innerHTML = `
+                    <div class="no-data">등록된 기프티콘이 없습니다.</div>
+                    <div style="text-align: center; margin-top: 2rem;">
+                        <button class="btn-success" onclick="openCreateGifticonModal()">➕ 새 기프티콘 추가</button>
+                    </div>
+                `;
+        } else {
+            const headerSection = `
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; padding: 1rem; background: linear-gradient(135deg, #fdeaea, #f8d7da); border-radius: 12px; border-left: 4px solid #e74c3c;">
+                        <strong style="color: #721c24; font-size: 1.1rem;">🎁 총 ${gifticons.length}개의 기프티콘</strong>
+                        <button class="btn-success" onclick="openCreateGifticonModal()">➕ 새 기프티콘 추가</button>
+                    </div>
+                `;
+
+            const gifticonCards = gifticons.map(gifticon => `
+                    <div class="gifticon-card">
+                        <div class="gifticon-header">
+                            <div style="display: flex; gap: 1.5rem; align-items: flex-start;">
+                                ${gifticon.imageUrl ? `<img src="${gifticon.imageUrl}" alt="${gifticon.name}" class="gifticon-image">` : '<div class="gifticon-image" style="background: #f8f9fa; display: flex; align-items: center; justify-content: center; color: #6c757d;">이미지 없음</div>'}
+                                <div class="gifticon-main-info">
+                                    <div class="gifticon-id">🎁 ${gifticon.id}</div>
+                                    <div class="gifticon-name">🏷️ ${gifticon.name}</div>
+                                    ${gifticon.description ? `<div class="gifticon-desc">📝 ${gifticon.description}</div>` : ''}
+                                    <div class="gifticon-price">💰 ${gifticon.price?.toLocaleString() || 0}원</div>
+                                </div>
+                            </div>
+                            <div class="gifticon-actions">
+                                <button class="btn-warning" onclick="openEditGifticonModal('${gifticon.id}')" title="기프티콘 수정">✏️ 수정</button>
+                                <button class="btn-danger" onclick="deleteGifticon('${gifticon.id}')" title="기프티콘 삭제">🗑️ 삭제</button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+
+            body.innerHTML = headerSection + gifticonCards;
+        }
+
+        document.body.appendChild(modal);
+    }
+
+    // 기프티콘 생성 모달
+    function openCreateGifticonModal() {
+        const modal = createModal('새 기프티콘 추가');
+        const body = modal.querySelector('.modal-body');
+
+        body.innerHTML = `
+                <form id="createGifticonForm" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label class="form-label">🏷️ 기프티콘명</label>
+                        <input type="text" id="newGifticonName" class="form-input" placeholder="예: 스타벅스 아메리카노" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">📝 설명</label>
+                        <textarea id="newGifticonDesc" class="form-textarea" placeholder="기프티콘에 대한 설명을 입력하세요"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">💰 가격 (원)</label>
+                        <input type="number" id="newGifticonPrice" class="form-input" placeholder="예: 4500" min="0" step="100" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">🖼️ 이미지</label>
+                        <div class="file-upload">
+                            <input type="file" id="newGifticonImage" accept="image/*">
+                            <label for="newGifticonImage" class="file-upload-label">
+                                <div class="file-upload-text">클릭하여 이미지를 선택하세요</div>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="modal-form-actions">
+                        <button type="button" class="btn-secondary" onclick="this.closest('.modal-overlay').remove()">취소</button>
+                        <button type="submit" class="btn-success">✅ 생성</button>
+                    </div>
+                </form>
+            `;
+
+        document.body.appendChild(modal);
+
+        // 파일 선택 시 라벨 업데이트
+        document.getElementById('newGifticonImage').addEventListener('change', function() {
+            const label = this.nextElementSibling.querySelector('.file-upload-text');
+            if (this.files.length > 0) {
+                label.textContent = this.files[0].name;
+            } else {
+                label.textContent = '클릭하여 이미지를 선택하세요';
+            }
+        });
+
+        // 폼 제출 이벤트
+        document.getElementById('createGifticonForm').addEventListener('submit', createGifticon);
+    }
+
+    // 기프티콘 수정 모달
+    async function openEditGifticonModal(gifticonId) {
+        try {
+            const response = await fetch(`/api/admin/gifticons/${gifticonId}`);
+            const data = await response.json();
+
+            if (data.resultCode !== 200) {
+                alert('기프티콘 정보를 불러오는데 실패했습니다.');
+                return;
+            }
+
+            const gifticon = data.data;
+            const modal = createModal('기프티콘 수정');
+            const body = modal.querySelector('.modal-body');
+
+            body.innerHTML = `
+                    <form id="editGifticonForm" enctype="multipart/form-data">
+                        <input type="hidden" id="editGifticonId" value="${gifticon.id}">
+                        <div class="form-group">
+                            <label class="form-label">🏷️ 기프티콘명</label>
+                            <input type="text" id="editGifticonName" class="form-input" value="${gifticon.name}" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">📝 설명</label>
+                            <textarea id="editGifticonDesc" class="form-textarea">${gifticon.description || ''}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">💰 가격 (원)</label>
+                            <input type="number" id="editGifticonPrice" class="form-input" value="${gifticon.price}" min="0" step="100" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">🖼️ 현재 이미지</label>
+                            ${gifticon.imageUrl ? `<img src="${gifticon.imageUrl}" alt="${gifticon.name}" style="width: 200px; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;">` : '<div style="color: #6c757d;">이미지가 없습니다.</div>'}
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">🖼️ 새 이미지 (선택사항)</label>
+                            <div class="file-upload">
+                                <input type="file" id="editGifticonImage" accept="image/*">
+                                <label for="editGifticonImage" class="file-upload-label">
+                                    <div class="file-upload-text">클릭하여 새 이미지를 선택하세요</div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="modal-form-actions">
+                            <button type="button" class="btn-secondary" onclick="this.closest('.modal-overlay').remove()">취소</button>
+                            <button type="submit" class="btn-warning">✏️ 수정</button>
+                        </div>
+                    </form>
+                `;
+
+            document.body.appendChild(modal);
+
+            // 파일 선택 시 라벨 업데이트
+            document.getElementById('editGifticonImage').addEventListener('change', function() {
+                const label = this.nextElementSibling.querySelector('.file-upload-text');
+                if (this.files.length > 0) {
+                    label.textContent = this.files[0].name;
+                } else {
+                    label.textContent = '클릭하여 새 이미지를 선택하세요';
+                }
+            });
+
+            // 폼 제출 이벤트
+            document.getElementById('editGifticonForm').addEventListener('submit', updateGifticon);
+
+        } catch (error) {
+            console.error('기프티콘 상세 정보 로딩 실패:', error);
+            alert('기프티콘 정보 로딩 중 오류가 발생했습니다.');
+        }
+    }
+
+    // 기프티콘 생성
+    async function createGifticon(e) {
+        e.preventDefault();
+
+        const name = document.getElementById('newGifticonName').value.trim();
+        const description = document.getElementById('newGifticonDesc').value.trim();
+        const price = parseInt(document.getElementById('newGifticonPrice').value);
+        const image = document.getElementById('newGifticonImage').files[0];
+
+        if (!name || isNaN(price)) {
+            alert('기프티콘명과 가격은 필수입니다.');
+            return;
+        }
+
+        try {
+            const formData = new FormData();
+            formData.append('name', name);
+            formData.append('description', description);
+            formData.append('price', price);
+            if (image) {
+                formData.append('image', image);
+            }
+
+            const response = await fetch('/api/admin/gifticons', {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await response.json();
+
+            if (data.resultCode === 200) {
+                alert('기프티콘이 성공적으로 생성되었습니다.');
+                document.querySelector('.modal-overlay').remove();
+                loadGifticons(); // 목록 새로고침
+                refreshStats();
+            } else {
+                alert('생성 실패: ' + data.message);
+            }
+        } catch (error) {
+            console.error('기프티콘 생성 실패:', error);
+            alert('생성 중 오류가 발생했습니다: ' + error.message);
+        }
+    }
+
+    // 기프티콘 수정
+    async function updateGifticon(e) {
+        e.preventDefault();
+
+        const id = document.getElementById('editGifticonId').value;
+        const name = document.getElementById('editGifticonName').value.trim();
+        const description = document.getElementById('editGifticonDesc').value.trim();
+        const price = parseInt(document.getElementById('editGifticonPrice').value);
+        const image = document.getElementById('editGifticonImage').files[0];
+
+        if (!name || isNaN(price)) {
+            alert('기프티콘명과 가격은 필수입니다.');
+            return;
+        }
+
+        try {
+            const formData = new FormData();
+            formData.append('name', name);
+            formData.append('description', description);
+            formData.append('price', price);
+            if (image) {
+                formData.append('image', image);
+            }
+
+            const response = await fetch(`/api/admin/gifticons/${id}`, {
+                method: 'PUT',
+                body: formData
+            });
+
+            const data = await response.json();
+
+            if (data.resultCode === 200) {
+                alert('기프티콘이 성공적으로 수정되었습니다.');
+                document.querySelector('.modal-overlay').remove();
+                loadGifticons(); // 목록 새로고침
+            } else {
+                alert('수정 실패: ' + data.message);
+            }
+        } catch (error) {
+            console.error('기프티콘 수정 실패:', error);
+            alert('수정 중 오류가 발생했습니다: ' + error.message);
+        }
+    }
+
+    // 기프티콘 삭제
+    async function deleteGifticon(gifticonId) {
+        if (!confirm(`기프티콘을 정말 삭제하시겠습니까?\n이 작업은 되돌릴 수 없습니다.`)) {
+            return;
+        }
+
+        try {
+            const response = await fetch(`/api/admin/gifticons/${gifticonId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            const data = await response.json();
+
+            if (data.resultCode === 200) {
+                alert('기프티콘이 성공적으로 삭제되었습니다.');
+                loadGifticons(); // 목록 새로고침
+                refreshStats();
+            } else {
+                alert('삭제 실패: ' + data.message);
+            }
+        } catch (error) {
+            console.error('기프티콘 삭제 실패:', error);
+            alert('삭제 중 오류가 발생했습니다: ' + error.message);
+        }
+    }
+
+    // 계정 모달 표시
+    function showAccountsModal(accounts) {
+        const modal = createModal('계정 목록');
+        const body = modal.querySelector('.modal-body');
+
+        if (!accounts || accounts.length === 0) {
+            body.innerHTML = '<div class="no-data">표시할 계정이 없습니다.</div>';
+        } else {
+            const accountCount = `<div style="margin-bottom: 1.5rem; padding: 1rem; background: linear-gradient(135deg, #e8f4fd, #d1ecf1); border-radius: 12px; border-left: 4px solid #17a2b8;">
                     <strong style="color: #0c5460; font-size: 1.1rem;">총 ${accounts.length}개의 계정</strong>
                 </div>`;
-                
-                const accountCards = accounts.map((account, index) => {
-                    console.log(`계정 ${index + 1} 처리 중:`, account);
-                    
-                    const userInfo = account.user ? `
+
+            const accountCards = accounts.map(account => {
+                const userInfo = account.user ? `
                         <div class="detail-item">
                             <div class="detail-label">실명</div>
                             <div class="detail-value">${account.user.name || '등록되지 않음'}</div>
@@ -1027,14 +2013,16 @@
                         </div>
                     `;
 
-                    const linesInfo = account.lines && account.lines.length > 0 ? `
+                const linesInfo = account.lines && account.lines.length > 0 ? `
                         <div class="lines-section">
                             <div class="lines-title">💱 보유 회선 (${account.lines.length}개)</div>
                             ${account.lines.map(line => `
                                 <div class="line-card">
                                     <div class="line-header">
                                         <span class="phone-number">📞 ${line.phoneNumber}</span>
-                                        ${line.plan ? `<span class="plan-info">📋 ${line.plan.name} (${line.plan.data ? line.plan.data.toLocaleString() : '0'}MB)</span>` : '<span class="plan-info">📋 요금제 미설정</span>'}
+                                        ${line.plan
+                                        ? `<span class="plan-info">📋 ${line.plan.name} (${line.plan.data === -1 ? '무제한' : line.plan.data.toLocaleString() + 'GB'})</span>`
+                                        : '<span class="plan-info">📋 요금제 미설정</span>'}
                                     </div>
                                     ${line.countryCode ? `<div style="font-size: 0.9rem; color: #6c757d; margin-top: 0.5rem;">🌍 국가코드: +${line.countryCode}</div>` : ''}
                                 </div>
@@ -1049,7 +2037,7 @@
                         </div>
                     `;
 
-                    return `
+                return `
                         <div class="account-card">
                             <div class="account-header">
                                 <div class="account-main-info">
@@ -1061,7 +2049,7 @@
                                     <button class="btn-danger" onclick="deleteAccount('${account.id}')" title="계정 삭제">🗑️ 삭제</button>
                                 </div>
                             </div>
-                            
+
                             <div class="account-details">
                                 <div class="detail-item">
                                     <div class="detail-label">🏢 제공자</div>
@@ -1073,85 +2061,131 @@
                                 </div>
                                 ${userInfo}
                             </div>
-                            
+
                             ${linesInfo}
                         </div>
                     `;
-                }).join('');
-                
-                console.log('HTML 생성 완료, body에 추가');
-                body.innerHTML = accountCount + accountCards;
-            }
-            
-            document.body.appendChild(modal);
-            console.log('모달을 DOM에 추가 완료');
+            }).join('');
+
+            body.innerHTML = accountCount + accountCards;
         }
 
-        // 그룹 코드 모달 표시
-        function showGroupCodesModal(groupCodes) {
-            console.log('showGroupCodesModal 함수 호출됨');
-            console.log('받은 groupCodes 데이터:', groupCodes);
-            
-            const modal = createModal('그룹 코드 관리');
-            const body = modal.querySelector('.modal-body');
-            
-            if (!groupCodes || groupCodes.length === 0) {
-                console.log('그룹 코드가 없음');
-                body.innerHTML = `
+        document.body.appendChild(modal);
+    }
+
+    // 그룹 코드 모달 표시
+    function showGroupCodesModal(groupCodes) {
+        const modal = createModal('그룹 코드 관리');
+        const body = modal.querySelector('.modal-body');
+
+        if (!groupCodes || groupCodes.length === 0) {
+            body.innerHTML = `
                     <div class="no-data">표시할 그룹 코드가 없습니다.</div>
                     <div style="text-align: center; margin-top: 2rem;">
                         <button class="btn-success" onclick="openCreateGroupCodeModal()">➕ 새 그룹 코드 추가</button>
                     </div>
                 `;
-            } else {
-                console.log('그룹 코드 개수:', groupCodes.length);
-                
-                // 그룹 코드 개수 및 추가 버튼
-                const headerSection = `
+        } else {
+            const headerSection = `
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; padding: 1rem; background: linear-gradient(135deg, #e8f5e8, #d4edda); border-radius: 12px; border-left: 4px solid #27ae60;">
                         <strong style="color: #155724; font-size: 1.1rem;">📝 총 ${groupCodes.length}개의 그룹 코드</strong>
                         <button class="btn-success" onclick="openCreateGroupCodeModal()">➕ 새 그룹 코드 추가</button>
                     </div>
                 `;
-                
-                const groupCodeCards = groupCodes.map((groupCode, index) => {
-                    console.log(`그룹 코드 ${index + 1} 처리 중:`, groupCode);
-                    
-                    return `
-                        <div class="groupcode-card">
-                            <div class="groupcode-header">
-                                <div class="groupcode-main-info">
-                                    <div class="groupcode-id">📋 ${groupCode.groupCode}</div>
-                                    <div class="groupcode-name">📂 ${groupCode.groupCodeName}</div>
-                                    <div class="groupcode-desc">📝 ${groupCode.groupCodeDesc || '설명이 없습니다.'}</div>
-                                </div>
-                                <div class="groupcode-actions">
-                                    <button class="btn-warning" onclick="openEditGroupCodeModal('${groupCode.groupCode}', '${groupCode.groupCodeName}', '${groupCode.groupCodeDesc || ''}')" title="그룹 코드 수정">✏️ 수정</button>
-                                    <button class="btn-danger" onclick="deleteGroupCode('${groupCode.groupCode}')" title="그룹 코드 삭제">🗑️ 삭제</button>
-                                </div>
+
+            const groupCodeCards = groupCodes.map(groupCode => `
+                    <div class="groupcode-card">
+                        <div class="groupcode-header">
+                            <div class="groupcode-main-info">
+                                <div class="groupcode-id">📋 ${groupCode.groupCode}</div>
+                                <div class="groupcode-name">📂 ${groupCode.groupCodeName}</div>
+                                <div class="groupcode-desc">📝 ${groupCode.groupCodeDesc || '설명이 없습니다.'}</div>
+                            </div>
+                            <div class="groupcode-actions">
+                                <button class="btn-info" onclick="loadCodesByGroupCode('${groupCode.groupCode}')" title="그룹 코드 보기">👁️ 코드 보기</button>
+                                <button class="btn-warning" onclick="openEditGroupCodeModal('${groupCode.groupCode}', '${groupCode.groupCodeName}', '${groupCode.groupCodeDesc || ''}')" title="그룹 코드 수정">✏️ 수정</button>
+                                <button class="btn-danger" onclick="deleteGroupCode('${groupCode.groupCode}')" title="그룹 코드 삭제">🗑️ 삭제</button>
                             </div>
                         </div>
-                    `;
-                }).join('');
-                
-                console.log('HTML 생성 완료, body에 추가');
-                body.innerHTML = headerSection + groupCodeCards;
-            }
-            
-            document.body.appendChild(modal);
-            console.log('모달을 DOM에 추가 완료');
+                    </div>
+                `).join('');
+
+            body.innerHTML = headerSection + groupCodeCards;
         }
 
-        // 그룹 코드 생성 모달
-        function openCreateGroupCodeModal() {
-            const modal = createModal('새 그룹 코드 추가');
-            const body = modal.querySelector('.modal-body');
-            
+        document.body.appendChild(modal);
+    }
+
+    // 특정 그룹 코드의 코드들 보기
+    async function loadCodesByGroupCode(groupCode) {
+        try {
+            const response = await fetch(`/api/admin/codes?groupCode=${groupCode}&pageNumber=0&pageSize=50`);
+            const data = await response.json();
+
+            if (data.resultCode === 200) {
+                showCodesModal(data.data, groupCode);
+            } else {
+                alert('코드 목록을 불러오는데 실패했습니다: ' + data.message);
+            }
+        } catch (error) {
+            console.error('코드 로딩 실패:', error);
+            alert('코드 목록 로딩 중 오류가 발생했습니다.');
+        }
+    }
+
+    // 코드 목록 모달 표시
+    function showCodesModal(codes, groupCode) {
+        const modal = createModal(`코드 목록 (${groupCode})`);
+        const body = modal.querySelector('.modal-body');
+
+        if (!codes || codes.length === 0) {
             body.innerHTML = `
+                    <div class="no-data">이 그룹에 등록된 코드가 없습니다.</div>
+                    <div style="text-align: center; margin-top: 2rem;">
+                        <button class="btn-success" onclick="openCreateCodeModal('${groupCode}')">➕ 새 코드 추가</button>
+                    </div>
+                `;
+        } else {
+            const headerSection = `
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; padding: 1rem; background: linear-gradient(135deg, #fff3cd, #ffeaa7); border-radius: 12px; border-left: 4px solid #f39c12;">
+                        <strong style="color: #856404; font-size: 1.1rem;">🏷️ 총 ${codes.length}개의 코드</strong>
+                        <button class="btn-success" onclick="openCreateCodeModal('${groupCode}')">➕ 새 코드 추가</button>
+                    </div>
+                `;
+
+            const codeCards = codes.map(code => `
+                    <div class="code-card">
+                        <div class="code-header">
+                            <div class="code-main-info">
+                                <div class="code-id">🏷️ ${code.groupCode}-${code.code}</div>
+                                <div class="code-name">📝 ${code.codeName}</div>
+                                ${code.codeNameBrief ? `<div class="code-brief">💬 ${code.codeNameBrief}</div>` : ''}
+                                <div class="code-order">📊 순서: ${code.orderNo}</div>
+                            </div>
+                            <div class="code-actions">
+                                <button class="btn-warning" onclick="openEditCodeModal('${code.groupCode}', '${code.code}', '${code.codeName}', '${code.codeNameBrief || ''}', ${code.orderNo})" title="코드 수정">✏️ 수정</button>
+                                <button class="btn-danger" onclick="deleteCode('${code.groupCode}', '${code.code}')" title="코드 삭제">🗑️ 삭제</button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+
+            body.innerHTML = headerSection + codeCards;
+        }
+
+        document.body.appendChild(modal);
+    }
+
+    // 그룹 코드 생성 모달
+    function openCreateGroupCodeModal() {
+        const modal = createModal('새 그룹 코드 추가');
+        const body = modal.querySelector('.modal-body');
+
+        body.innerHTML = `
                 <form id="createGroupCodeForm">
                     <div class="form-group">
                         <label class="form-label">📋 그룹 코드 (3자리)</label>
-                        <input type="text" id="newGroupCode" class="form-input" placeholder="예: 010" maxlength="3" required>
+                        <input type="text" id="newGroupCode" class="form-input" placeholder="예: STA" maxlength="3" required>
                     </div>
                     <div class="form-group">
                         <label class="form-label">📂 그룹 코드명</label>
@@ -1167,19 +2201,19 @@
                     </div>
                 </form>
             `;
-            
-            document.body.appendChild(modal);
-            
-            // 폼 제출 이벤트
-            document.getElementById('createGroupCodeForm').addEventListener('submit', createGroupCode);
-        }
 
-        // 그룹 코드 수정 모달
-        function openEditGroupCodeModal(groupCode, groupCodeName, groupCodeDesc) {
-            const modal = createModal('그룹 코드 수정');
-            const body = modal.querySelector('.modal-body');
-            
-            body.innerHTML = `
+        document.body.appendChild(modal);
+
+        // 폼 제출 이벤트
+        document.getElementById('createGroupCodeForm').addEventListener('submit', createGroupCode);
+    }
+
+    // 그룹 코드 수정 모달
+    function openEditGroupCodeModal(groupCode, groupCodeName, groupCodeDesc) {
+        const modal = createModal('그룹 코드 수정');
+        const body = modal.querySelector('.modal-body');
+
+        body.innerHTML = `
                 <form id="editGroupCodeForm">
                     <div class="form-group">
                         <label class="form-label">📋 그룹 코드</label>
@@ -1199,142 +2233,210 @@
                     </div>
                 </form>
             `;
-            
-            document.body.appendChild(modal);
-            
-            // 폼 제출 이벤트
-            document.getElementById('editGroupCodeForm').addEventListener('submit', (e) => updateGroupCode(e, groupCode));
+
+        document.body.appendChild(modal);
+
+        // 폼 제출 이벤트
+        document.getElementById('editGroupCodeForm').addEventListener('submit', (e) => updateGroupCode(e, groupCode));
+    }
+
+    // 그룹 코드 생성
+    async function createGroupCode(e) {
+        e.preventDefault();
+
+        const groupCode = document.getElementById('newGroupCode').value.trim();
+        const groupCodeName = document.getElementById('newGroupCodeName').value.trim();
+        const groupCodeDesc = document.getElementById('newGroupCodeDesc').value.trim();
+
+        if (!groupCode || !groupCodeName) {
+            alert('그룹 코드와 그룹 코드명은 필수입니다.');
+            return;
         }
 
-        // 그룹 코드 생성
-        async function createGroupCode(e) {
-            e.preventDefault();
-            
-            const groupCode = document.getElementById('newGroupCode').value.trim();
-            const groupCodeName = document.getElementById('newGroupCodeName').value.trim();
-            const groupCodeDesc = document.getElementById('newGroupCodeDesc').value.trim();
-            
-            if (!groupCode || !groupCodeName) {
-                alert('그룹 코드와 그룹 코드명은 필수입니다.');
-                return;
+        if (groupCode.length !== 3) {
+            alert('그룹 코드는 정확히 3자리여야 합니다.');
+            return;
+        }
+
+        try {
+            const response = await fetch('/api/admin/group-codes', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    groupCode: groupCode,
+                    groupCodeName: groupCodeName,
+                    groupCodeDesc: groupCodeDesc
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.resultCode === 200) {
+                alert('그룹 코드가 성공적으로 생성되었습니다.');
+                document.querySelector('.modal-overlay').remove();
+                loadGroupCodes(); // 목록 새로고침
+                refreshStats();
+            } else {
+                alert('생성 실패: ' + data.message);
             }
-            
-            if (groupCode.length !== 3) {
-                alert('그룹 코드는 정확히 3자리여야 합니다.');
-                return;
+        } catch (error) {
+            console.error('그룹 코드 생성 실패:', error);
+            alert('생성 중 오류가 발생했습니다: ' + error.message);
+        }
+    }
+
+    // 그룹 코드 수정
+    async function updateGroupCode(e, groupCode) {
+        e.preventDefault();
+
+        const groupCodeName = document.getElementById('editGroupCodeName').value.trim();
+        const groupCodeDesc = document.getElementById('editGroupCodeDesc').value.trim();
+
+        if (!groupCodeName) {
+            alert('그룹 코드명은 필수입니다.');
+            return;
+        }
+
+        try {
+            const response = await fetch(`/api/admin/group-codes/${groupCode}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    groupCode: groupCode,
+                    groupCodeName: groupCodeName,
+                    groupCodeDesc: groupCodeDesc
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.resultCode === 200) {
+                alert('그룹 코드가 성공적으로 수정되었습니다.');
+                document.querySelector('.modal-overlay').remove();
+                loadGroupCodes(); // 목록 새로고침
+            } else {
+                alert('수정 실패: ' + data.message);
             }
-            
-            try {
-                const response = await fetch('/api/admin/group-codes', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        groupCode: groupCode,
-                        groupCodeName: groupCodeName,
-                        groupCodeDesc: groupCodeDesc
-                    })
-                });
-                
-                const data = await response.json();
-                
-                if (data.resultCode === 200) {
-                    alert('그룹 코드가 성공적으로 생성되었습니다.');
-                    document.querySelector('.modal-overlay').remove();
-                    loadGroupCodes(); // 목록 새로고침
-                    refreshStats();
-                } else {
-                    alert('생성 실패: ' + data.message);
+        } catch (error) {
+            console.error('그룹 코드 수정 실패:', error);
+            alert('수정 중 오류가 발생했습니다: ' + error.message);
+        }
+    }
+
+    // 그룹 코드 삭제
+    async function deleteGroupCode(groupCode) {
+        if (!confirm(`그룹 코드 "${groupCode}"를 정말 삭제하시겠습니까?\n이 그룹에 속한 모든 코드도 함께 삭제됩니다.`)) {
+            return;
+        }
+
+        try {
+            const response = await fetch(`/api/admin/group-codes/${groupCode}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
                 }
-            } catch (error) {
-                console.error('그룹 코드 생성 실패:', error);
-                alert('생성 중 오류가 발생했습니다: ' + error.message);
+            });
+
+            const data = await response.json();
+
+            if (data.resultCode === 200) {
+                alert('그룹 코드가 성공적으로 삭제되었습니다.');
+                loadGroupCodes(); // 목록 새로고침
+                refreshStats();
+            } else {
+                alert('삭제 실패: ' + data.message);
             }
+        } catch (error) {
+            console.error('그룹 코드 삭제 실패:', error);
+            alert('삭제 중 오류가 발생했습니다: ' + error.message);
+        }
+    }
+
+    // 계정 삭제
+    async function deleteAccount(accountId) {
+        if (!confirm('이 계정을 정말 삭제하시겠습니까?\n이 작업은 되돌릴 수 없습니다.')) {
+            return;
         }
 
-        // 그룹 코드 수정
-        async function updateGroupCode(e, groupCode) {
-            e.preventDefault();
-            
-            const groupCodeName = document.getElementById('editGroupCodeName').value.trim();
-            const groupCodeDesc = document.getElementById('editGroupCodeDesc').value.trim();
-            
-            if (!groupCodeName) {
-                alert('그룹 코드명은 필수입니다.');
-                return;
-            }
-            
-            try {
-                const response = await fetch(`/api/admin/group-codes/${groupCode}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        groupCode: groupCode,
-                        groupCodeName: groupCodeName,
-                        groupCodeDesc: groupCodeDesc
-                    })
-                });
-                
-                const data = await response.json();
-                
-                if (data.resultCode === 200) {
-                    alert('그룹 코드가 성공적으로 수정되었습니다.');
-                    document.querySelector('.modal-overlay').remove();
-                    loadGroupCodes(); // 목록 새로고침
-                } else {
-                    alert('수정 실패: ' + data.message);
+        try {
+            const response = await fetch(`/api/admin/accounts/${accountId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
                 }
-            } catch (error) {
-                console.error('그룹 코드 수정 실패:', error);
-                alert('수정 중 오류가 발생했습니다: ' + error.message);
+            });
+
+            const data = await response.json();
+
+            if (data.resultCode === 200) {
+                alert('계정이 성공적으로 삭제되었습니다.');
+                loadAccounts(); // 목록 새로고침
+                refreshStats();
+            } else {
+                alert('삭제 실패: ' + data.message);
             }
+        } catch (error) {
+            console.error('계정 삭제 실패:', error);
+            alert('삭제 중 오류가 발생했습니다: ' + error.message);
+        }
+    }
+
+    // 계정 검색 모달
+    function openSearchModal() {
+        const modal = createModal('계정 검색', 'search-modal');
+        const body = modal.querySelector('.modal-body');
+
+        body.innerHTML = `
+                <form id="searchForm">
+                    <input type="text" id="searchKeyword" class="search-input" placeholder="이메일 또는 닉네임 입력...">
+                    <div class="button-group">
+                        <button type="button" class="btn-secondary" onclick="this.closest('.modal-overlay').remove()">취소</button>
+                        <button type="submit" class="btn-primary">🔍 검색</button>
+                    </div>
+                </form>
+            `;
+
+        document.body.appendChild(modal);
+
+        // 폼 제출 이벤트
+        document.getElementById('searchForm').addEventListener('submit', searchAccounts);
+    }
+
+    // 계정 검색
+    async function searchAccounts(e) {
+        e.preventDefault();
+
+        const keyword = document.getElementById('searchKeyword').value.trim();
+        if (!keyword) {
+            alert('검색어를 입력해주세요.');
+            return;
         }
 
-        // 그룹 코드 삭제
-        async function deleteGroupCode(groupCode) {
-            if (!confirm(`그룹 코드 "${groupCode}"를 정말 삭제하시겠습니까?\n이 작업은 되돌릴 수 없습니다.`)) {
-                return;
-            }
-            
-            try {
-                const response = await fetch(`/api/admin/group-codes/${groupCode}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
-                
-                const data = await response.json();
-                
-                if (data.resultCode === 200) {
-                    alert('그룹 코드가 성공적으로 삭제되었습니다.');
-                    loadGroupCodes(); // 목록 새로고침
-                    refreshStats();
-                } else {
-                    alert('삭제 실패: ' + data.message);
-                }
-            } catch (error) {
-                console.error('그룹 코드 삭제 실패:', error);
-                alert('삭제 중 오류가 발생했습니다: ' + error.message);
-            }
-        }
-        function showGenericModal(title, data) {
-            const modal = createModal(title);
-            const body = modal.querySelector('.modal-body');
-            
-            body.innerHTML = `<div class="json-display">${JSON.stringify(data, null, 2)}</div>`;
-            document.body.appendChild(modal);
-        }
+        try {
+            const response = await fetch(`/api/admin/accounts/search?keyword=${encodeURIComponent(keyword)}&pageNumber=0&pageSize=20`);
+            const data = await response.json();
 
-        // 모달 생성
-        function createModal(title) {
-            const modal = document.createElement('div');
-            modal.className = 'modal-overlay';
-            
-            modal.innerHTML = `
+            if (data.resultCode === 200) {
+                document.querySelector('.modal-overlay').remove();
+                showAccountsModal(data.data);
+            } else {
+                alert('검색 실패: ' + data.message);
+            }
+        } catch (error) {
+            console.error('계정 검색 실패:', error);
+            alert('검색 중 오류가 발생했습니다.');
+        }
+    }
+
+    // 모달 생성 헬퍼 함수
+    function createModal(title, additionalClass = '') {
+        const modal = document.createElement('div');
+        modal.className = `modal-overlay ${additionalClass}`;
+        modal.innerHTML = `
                 <div class="modal-content">
                     <div class="modal-header">
                         <h3>${title}</h3>
@@ -1343,127 +2445,23 @@
                     <div class="modal-body"></div>
                 </div>
             `;
-            
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) modal.remove();
-            });
-            
-            return modal;
-        }
+        return modal;
+    }
 
-        // 검색 모달
-        function openSearchModal() {
-            const modal = document.createElement('div');
-            modal.className = 'modal-overlay search-modal';
-            
-            modal.innerHTML = `
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3>계정 검색</h3>
-                        <button class="close-btn" onclick="this.closest('.modal-overlay').remove()">✕</button>
-                    </div>
-                    <div class="modal-body">
-                        <input type="text" id="searchInput" class="search-input" placeholder="이메일 또는 닉네임을 입력하세요">
-                        <div class="button-group">
-                            <button class="btn-primary" onclick="performSearch()">검색</button>
-                            <button class="btn-secondary" onclick="this.closest('.modal-overlay').remove()">취소</button>
-                        </div>
-                    </div>
-                </div>
-            `;
-            
-            document.body.appendChild(modal);
-            
-            document.getElementById('searchInput').focus();
-            document.getElementById('searchInput').addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') performSearch();
-            });
-            
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) modal.remove();
-            });
-        }
+    // 통계 새로고침
+    function refreshStats() {
+        loadDashboardStats();
+    }
 
-        // 검색 실행
-        async function performSearch() {
-            const keyword = document.getElementById('searchInput').value.trim();
-            if (!keyword) {
-                alert('검색어를 입력하세요.');
-                return;
-            }
-            
-            try {
-                const response = await fetch(`/api/admin/accounts/search?keyword=${encodeURIComponent(keyword)}&pageNumber=0&pageSize=10`);
-                const data = await response.json();
-                
-                document.querySelector('.search-modal').remove();
-                
-                if (data.resultCode === 200) {
-                    showAccountsModal(data.data);
-                } else {
-                    alert('검색에 실패했습니다: ' + data.message);
-                }
-            } catch (error) {
-                console.error('검색 실패:', error);
-                alert('검색 중 오류가 발생했습니다.');
-            }
-        }
+    // 시스템 정보 표시
+    function showSystemInfo() {
+        alert('시스템 상태: 정상\n데이터베이스: 연결됨\n서버: 활성');
+    }
 
-        // 계정 삭제
-        async function deleteAccount(accountId) {
-            if (!confirm(`계정 "${accountId}"를 정말 삭제하시겠습니까?\n이 작업은 되돌릴 수 없습니다.`)) {
-                return;
-            }
-            
-            try {
-                const response = await fetch(`/api/admin/accounts/${accountId}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
-                
-                const data = await response.json();
-                
-                if (data.resultCode === 200) {
-                    alert('계정이 성공적으로 삭제되었습니다.');
-                    document.querySelector('.modal-overlay').remove();
-                    refreshStats();
-                } else {
-                    alert('삭제 실패: ' + data.message);
-                }
-            } catch (error) {
-                console.error('삭제 실패:', error);
-                alert('삭제 중 오류가 발생했습니다: ' + error.message);
-            }
-        }
-
-        // 통계 새로고침
-        function refreshStats() {
-            document.getElementById('totalAccounts').textContent = '로딩중...';
-            document.getElementById('totalGroupCodes').textContent = '로딩중...';
-            document.getElementById('totalCodes').textContent = '로딩중...';
-            
-            loadDashboardStats();
-        }
-
-        // 시스템 정보
-        function showSystemInfo() {
-            const info = {
-                시스템: 'Spring Boot 관리자 시스템',
-                버전: '1.0.0',
-                데이터베이스: 'MySQL',
-                현재시간: new Date().toLocaleString('ko-KR'),
-                상태: '정상 운영'
-            };
-            
-            showGenericModal('시스템 정보', info);
-        }
-
-        // 페이지 로드 시 통계 로딩
-        document.addEventListener('DOMContentLoaded', () => {
-            loadDashboardStats();
-        });
-    </script>
+    // 페이지 로드시 통계 초기화
+    window.addEventListener('DOMContentLoaded', () => {
+        loadDashboardStats();
+    });
+</script>
 </body>
 </html>
