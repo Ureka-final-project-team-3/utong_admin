@@ -39,7 +39,7 @@ logging:
 
 file:
   upload:
-    dir: gificons/
+    dir: gifticons/
 
 cloud:
   aws:
