@@ -1254,7 +1254,7 @@
     // 계정 목록 로딩
     async function loadAccounts() {
         try {
-            const response = await fetch('/api/admin/accounts?pageNumber=0&pageSize=20');
+            const response = await fetch('/api/admin/accounts?pageNumber=0&pageSize=50');
             const data = await response.json();
 
             if (data.resultCode === 200) {
