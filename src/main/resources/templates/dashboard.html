@@ -1135,6 +1135,11 @@
             <div class="stat-number" id="totalGifticons">-</div>
             <div class="stat-label">기프티콘 수</div>
         </div>
+         <div class="stat-card">
+	        <div class="stat-icon">🎫</div>
+	        <div class="stat-number" id="totalCoupons">-</div>
+	        <div class="stat-label">쿠폰 수</div>
+	    </div>
     </div>
 
     <div class="management-grid">
@@ -1201,6 +1206,38 @@
                 </button>
             </div>
         </div>
+        <div class="management-card">
+		    <h3>
+		        <div class="card-icon" style="background: linear-gradient(45deg, #9b59b6, #8e44ad);">🎲</div>
+		        룰렛 이벤트 관리
+		    </h3>
+		    <div class="menu-items">
+		        <button class="menu-item" onclick="openRouletteEventModal()">
+		            <h4>이벤트 등록</h4>
+		            <p>새로운 룰렛 이벤트를 등록하고 설정을 관리합니다</p>
+		        </button>
+		        <button class="menu-item" onclick="loadRouletteEvents()">
+		            <h4>이벤트 목록</h4>
+		            <p>등록된 룰렛 이벤트 목록을 조회하고 관리합니다</p>
+		        </button>
+		    </div>
+		</div>
+		<div class="management-card">
+	        <h3>
+	            <div class="card-icon" style="background: linear-gradient(45deg, #ff9800, #f57c00);">🎫</div>
+	            쿠폰 관리
+	        </h3>
+	        <div class="menu-items">
+	            <button class="menu-item" onclick="loadCoupons()">
+	                <h4>쿠폰 목록</h4>
+	                <p>등록된 쿠폰 조회 및 관리</p>
+	            </button>
+	            <button class="menu-item" onclick="openCreateCouponModal()">
+	                <h4>쿠폰 추가</h4>
+	                <p>새로운 쿠폰 등록</p>
+	            </button>
+	        </div>
+	    </div>
     </div>
 </div>
 
@@ -2457,7 +2494,862 @@
     function showSystemInfo() {
         alert('시스템 상태: 정상\n데이터베이스: 연결됨\n서버: 활성');
     }
+ // 룰렛 이벤트 등록 모달 열기
+    function openRouletteEventModal() {
+        const modal = createModal('룰렛 이벤트 등록');
+        const body = modal.querySelector('.modal-body');
 
+        body.innerHTML = `
+            <form id="rouletteEventForm">
+                <div class="form-group">
+                    <label class="form-label">🎯 이벤트 제목</label>
+                    <input type="text" id="eventTitle" class="form-input" placeholder="예: 설날 특별 룰렛" required>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group">
+                        <label class="form-label">📅 시작 날짜</label>
+                        <input type="datetime-local" id="startDate" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">📅 종료 날짜</label>
+                        <input type="datetime-local" id="endDate" class="form-input" required>
+                    </div>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group">
+                        <label class="form-label">🏆 최대 당첨자 수</label>
+                        <input type="number" id="maxWinners" class="form-input" min="1" placeholder="예: 100" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">🎲 당첨 확률 (%)</label>
+                        <input type="number" id="winProbability" class="form-input" min="0" max="100" step="0.01" placeholder="예: 15.5" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">⚡ 활성화 상태</label>
+                    <select id="isActive" class="form-select">
+                        <option value="true">활성화</option>
+                        <option value="false">비활성화</option>
+                    </select>
+                </div>
+                
+                <div class="modal-form-actions">
+                    <button type="button" class="btn-secondary" onclick="this.closest('.modal-overlay').remove()">취소</button>
+                    <button type="submit" class="btn-success">🎯 등록</button>
+                </div>
+            </form>
+        `;
+
+        document.body.appendChild(modal);
+
+        // 현재 시간을 기본값으로 설정
+        const now = new Date();
+        const tomorrow = new Date(now);
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        
+        document.getElementById('startDate').value = now.toISOString().slice(0, 16);
+        document.getElementById('endDate').value = tomorrow.toISOString().slice(0, 16);
+
+        // 폼 제출 이벤트
+        document.getElementById('rouletteEventForm').addEventListener('submit', createRouletteEvent);
+    }
+
+    // 룰렛 이벤트 목록 모달 열기
+    function loadRouletteEvents() {
+        const modal = createModal('룰렛 이벤트 목록');
+        const body = modal.querySelector('.modal-body');
+
+        body.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; padding: 1rem; background: linear-gradient(135deg, #f3e5f5, #e1bee7); border-radius: 12px; border-left: 4px solid #9c27b0;">
+                <strong style="color: #4a148c; font-size: 1.1rem;">🎲 룰렛 이벤트 관리</strong>
+                <button class="btn-success" onclick="openRouletteEventModal()">➕ 새 이벤트 추가</button>
+            </div>
+            <div id="rouletteEventsContainer">
+                <div class="loading">이벤트 목록을 불러오는 중...</div>
+            </div>
+        `;
+
+        document.body.appendChild(modal);
+        
+        // 이벤트 목록 로드
+        loadRouletteEventsData();
+    }
+
+    // 룰렛 이벤트 데이터 로드
+    async function loadRouletteEventsData() {
+        try {
+            const response = await fetch('/api/admin/roulette/events?pageNumber=0&pageSize=50');
+            const result = await response.json();
+            
+            if (result.resultCode === 200) {
+                displayRouletteEvents(result.data);
+            } else {
+                document.getElementById('rouletteEventsContainer').innerHTML = 
+                    `<div class="no-data">이벤트 목록을 불러올 수 없습니다: ${result.message}</div>`;
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            document.getElementById('rouletteEventsContainer').innerHTML = 
+                '<div class="no-data">이벤트 목록을 불러오는 중 오류가 발생했습니다.</div>';
+        }
+    }
+
+    // 룰렛 이벤트 목록 표시
+    function displayRouletteEvents(events) {
+        const container = document.getElementById('rouletteEventsContainer');
+        if (!container) return;
+        
+        if (!events || events.length === 0) {
+            container.innerHTML = `
+                <div class="no-data">등록된 룰렛 이벤트가 없습니다.</div>
+                <div style="text-align: center; margin-top: 2rem;">
+                    <button class="btn-success" onclick="openRouletteEventModal()">➕ 새 이벤트 추가</button>
+                </div>
+            `;
+            return;
+        }
+        
+        const eventsHtml = events.map(event => `
+            <div class="account-card" style="border-left: 4px solid #9c27b0;">
+                <div class="account-header">
+                    <div class="account-main-info">
+                        <div class="account-id">🎲 ${event.id}</div>
+                        <div class="account-name">🎯 ${event.title}</div>
+                    </div>
+                    <div class="account-actions">
+                        <button class="btn-warning" onclick="toggleEventStatus('${event.id}', ${!event.isActive})" title="상태 변경">
+                            ${event.isActive ? '⏸️ 비활성화' : '▶️ 활성화'}
+                        </button>
+                        <button class="btn-danger" onclick="deleteRouletteEvent('${event.id}')" title="이벤트 삭제">🗑️ 삭제</button>
+                    </div>
+                </div>
+
+                <div class="account-details">
+                    <div class="detail-item">
+                        <div class="detail-label">📅 시작 날짜</div>
+                        <div class="detail-value">${new Date(event.startDate).toLocaleString()}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">📅 종료 날짜</div>
+                        <div class="detail-value">${new Date(event.endDate).toLocaleString()}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">🏆 당첨자</div>
+                        <div class="detail-value">${event.currentWinners} / ${event.maxWinners} 명</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">🎲 당첨 확률</div>
+                        <div class="detail-value">${(event.winProbability * 100).toFixed(2)}%</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">⚡ 상태</div>
+                        <div class="detail-value">
+                            <span style="color: ${event.isActive ? '#28a745' : '#dc3545'}; font-weight: bold;">
+                                ${event.isActive ? '✅ 활성' : '❌ 비활성'}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">📅 생성일</div>
+                        <div class="detail-value">${new Date(event.createdAt).toLocaleString()}</div>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+        
+        container.innerHTML = eventsHtml;
+    }
+
+    // 룰렛 이벤트 생성
+    async function createRouletteEvent(e) {
+        e.preventDefault();
+
+        const title = document.getElementById('eventTitle').value.trim();
+        const startDate = document.getElementById('startDate').value;
+        const endDate = document.getElementById('endDate').value;
+        const maxWinners = parseInt(document.getElementById('maxWinners').value);
+        const winProbabilityPercent = parseFloat(document.getElementById('winProbability').value);
+        const isActive = document.getElementById('isActive').value === 'true';
+
+        if (!title || !startDate || !endDate || !maxWinners || isNaN(winProbabilityPercent)) {
+            alert('모든 필드를 올바르게 입력해주세요.');
+            return;
+        }
+
+        if (new Date(startDate) >= new Date(endDate)) {
+            alert('시작 날짜는 종료 날짜보다 이전이어야 합니다.');
+            return;
+        }
+
+        if (winProbabilityPercent < 0 || winProbabilityPercent > 100) {
+            alert('당첨 확률은 0~100 사이의 값이어야 합니다.');
+            return;
+        }
+
+        // 퍼센트를 소수로 변환
+        const winProbabilityDecimal = winProbabilityPercent / 100;
+
+        const eventData = {
+            title: title,
+            startDate: startDate,
+            endDate: endDate,
+            maxWinners: maxWinners,
+            winProbability: winProbabilityDecimal,
+            isActive: isActive
+        };
+
+        try {
+            const response = await fetch('/api/admin/roulette/events', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(eventData)
+            });
+
+            const result = await response.json();
+
+            if (result.resultCode === 200) {
+                alert('룰렛 이벤트가 성공적으로 등록되었습니다.');
+                document.querySelector('.modal-overlay').remove();
+                refreshStats(); // 통계 새로고침
+            } else {
+                alert('등록 실패: ' + result.message);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('등록 중 오류가 발생했습니다: ' + error.message);
+        }
+    }
+
+    // 이벤트 상태 토글
+    async function toggleEventStatus(eventId, newStatus) {
+        try {
+            const response = await fetch(`/api/admin/roulette/events/${eventId}/status`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ isActive: newStatus })
+            });
+
+            const result = await response.json();
+
+            if (result.resultCode === 200) {
+                alert('상태가 변경되었습니다.');
+                loadRouletteEventsData(); // 목록 새로고침
+            } else {
+                alert('상태 변경 실패: ' + result.message);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('상태 변경 중 오류가 발생했습니다.');
+        }
+    }
+
+    // 룰렛 이벤트 삭제
+    async function deleteRouletteEvent(eventId) {
+        if (!confirm('이 룰렛 이벤트를 정말 삭제하시겠습니까?\n이 작업은 되돌릴 수 없습니다.')) {
+            return;
+        }
+
+        try {
+            const response = await fetch(`/api/admin/roulette/events/${eventId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            const result = await response.json();
+
+            if (result.resultCode === 200) {
+                alert('룰렛 이벤트가 성공적으로 삭제되었습니다.');
+                loadRouletteEventsData(); // 목록 새로고침
+                refreshStats(); // 통계 새로고침
+            } else {
+                alert('삭제 실패: ' + result.message);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('삭제 중 오류가 발생했습니다: ' + error.message);
+        }
+    }
+
+    // 통계에 룰렛 이벤트 개수 로딩 추가
+    async function loadDashboardStats() {
+        try {
+            const [accountsRes, groupCodesRes, codesRes, gifticonsRes, rouletteEventsRes] = await Promise.all([
+                fetch('/api/admin/accounts/count'),
+                fetch('/api/admin/group-codes/count'),
+                fetch('/api/admin/codes/count'),
+                fetch('/api/admin/gifticons/count'),
+                fetch('/api/admin/roulette/events/count')
+            ]);
+
+            // 기존 통계들
+            if (accountsRes.ok) {
+                const data = await accountsRes.json();
+                document.getElementById('totalAccounts').textContent = data.data?.toLocaleString() || '0';
+            } else {
+                document.getElementById('totalAccounts').textContent = 'N/A';
+            }
+
+            if (groupCodesRes.ok) {
+                const data = await groupCodesRes.json();
+                document.getElementById('totalGroupCodes').textContent = data.data?.toLocaleString() || '0';
+            } else {
+                document.getElementById('totalGroupCodes').textContent = 'N/A';
+            }
+
+            if (codesRes.ok) {
+                const data = await codesRes.json();
+                document.getElementById('totalCodes').textContent = data.data?.toLocaleString() || '0';
+            } else {
+                document.getElementById('totalCodes').textContent = 'N/A';
+            }
+
+            if (gifticonsRes.ok) {
+                const data = await gifticonsRes.json();
+                document.getElementById('totalGifticons').textContent = data.data?.toLocaleString() || '0';
+            } else {
+                document.getElementById('totalGifticons').textContent = 'N/A';
+            }
+
+            // 룰렛 이벤트 통계 추가 (5번째 stat-card가 있다면)
+            const rouletteEventsElement = document.getElementById('totalRouletteEvents');
+            if (rouletteEventsElement) {
+                if (rouletteEventsRes.ok) {
+                    const data = await rouletteEventsRes.json();
+                    rouletteEventsElement.textContent = data.data?.toLocaleString() || '0';
+                } else {
+                    rouletteEventsElement.textContent = 'N/A';
+                }
+            }
+
+        } catch (error) {
+            console.error('통계 로딩 실패:', error);
+            document.getElementById('totalAccounts').textContent = 'Error';
+            document.getElementById('totalGroupCodes').textContent = 'Error';
+            document.getElementById('totalCodes').textContent = 'Error';
+            document.getElementById('totalGifticons').textContent = 'Error';
+            
+            const rouletteEventsElement = document.getElementById('totalRouletteEvents');
+            if (rouletteEventsElement) {
+                rouletteEventsElement.textContent = 'Error';
+            }
+        }
+    }
+ // 쿠폰 등록 모달 열기
+    function openCreateCouponModal() {
+        const modal = createModal('쿠폰 등록');
+        const body = modal.querySelector('.modal-body');
+
+        body.innerHTML = `
+            <form id="createCouponForm">
+                <div class="form-group">
+                    <label class="form-label">🎁 기프티콘 선택</label>
+                    <select id="gifticonSelect" class="form-select" required>
+                        <option value="">기프티콘을 선택하세요</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">🏷️ 쿠폰 코드</label>
+                    <select id="couponCodeSelect" class="form-select" required>
+                        <option value="">쿠폰 코드를 선택하세요</option>
+                    </select>
+                </div>
+                
+                
+                
+                <div class="modal-form-actions">
+                    <button type="button" class="btn-secondary" onclick="this.closest('.modal-overlay').remove()">취소</button>
+                    <button type="submit" class="btn-success">🎫 등록</button>
+                </div>
+            </form>
+        `;
+
+        document.body.appendChild(modal);
+
+        // 기프티콘 목록 로드
+        loadGifticonOptions();
+        
+        // 쿠폰 코드 옵션 로드 (공통코드 030)
+        loadCouponCodeOptions();
+
+        // 기본 만료일 설정 (7일 후)
+        const weekLater = new Date();
+        weekLater.setDate(weekLater.getDate() + 7);
+        document.getElementById('expiredAt').value = weekLater.toISOString().slice(0, 16);
+
+        // 폼 제출 이벤트
+        document.getElementById('createCouponForm').addEventListener('submit', createCoupon);
+    }
+
+    // 쿠폰 목록 모달 열기
+    function loadCoupons() {
+        const modal = createModal('쿠폰 목록');
+        const body = modal.querySelector('.modal-body');
+
+        body.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; padding: 1rem; background: linear-gradient(135deg, #fff3e0, #ffcc80); border-radius: 12px; border-left: 4px solid #ff9800;">
+                <strong style="color: #e65100; font-size: 1.1rem;">🎫 쿠폰 관리</strong>
+                <button class="btn-success" onclick="openCreateCouponModal()">➕ 새 쿠폰 추가</button>
+            </div>
+            <div id="couponsContainer">
+                <div class="loading">쿠폰 목록을 불러오는 중...</div>
+            </div>
+        `;
+
+        document.body.appendChild(modal);
+        
+        // 쿠폰 목록 로드
+        loadCouponsData();
+    }
+
+    // 쿠폰 데이터 로드
+    async function loadCouponsData() {
+        try {
+            const response = await fetch('/api/admin/coupons?pageNumber=0&pageSize=50');
+            const result = await response.json();
+            
+            if (result.resultCode === 200) {
+                displayCoupons(result.data);
+            } else {
+                document.getElementById('couponsContainer').innerHTML = 
+                    `<div class="no-data">쿠폰 목록을 불러올 수 없습니다: ${result.message}</div>`;
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            document.getElementById('couponsContainer').innerHTML = 
+                '<div class="no-data">쿠폰 목록을 불러오는 중 오류가 발생했습니다.</div>';
+        }
+    }
+
+    // 쿠폰 목록 표시
+    function displayCoupons(coupons) {
+        const container = document.getElementById('couponsContainer');
+        if (!container) return;
+        
+        if (!coupons || coupons.length === 0) {
+            container.innerHTML = `
+                <div class="no-data">등록된 쿠폰이 없습니다.</div>
+                <div style="text-align: center; margin-top: 2rem;">
+                    <button class="btn-success" onclick="openCreateCouponModal()">➕ 새 쿠폰 추가</button>
+                </div>
+            `;
+            return;
+        }
+        
+        const couponsHtml = coupons.map(coupon => `
+            <div class="account-card" style="border-left: 4px solid #ff9800;">
+                <div class="account-header">
+                    <div style="display: flex; gap: 1.5rem; align-items: flex-start;">
+                        ${coupon.gifticonImageUrl ? 
+                            `<img src="${coupon.gifticonImageUrl}" alt="${coupon.gifticonName}" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px;">` : 
+                            '<div style="width: 80px; height: 80px; background: #f8f9fa; display: flex; align-items: center; justify-content: center; border-radius: 8px; color: #6c757d;">이미지<br>없음</div>'
+                        }
+                        <div class="account-main-info">
+                            <div class="account-id">🎫 ${coupon.id}</div>
+                            <div class="account-name">🎁 ${coupon.gifticonName || '기프티콘 정보 없음'}</div>
+                            <div style="color: #ff9800; font-weight: 600; margin-top: 0.5rem;">
+                                💰 ${coupon.gifticonPrice ? coupon.gifticonPrice.toLocaleString() : '0'}원
+                            </div>
+                        </div>
+                    </div>
+                    <div class="account-actions">
+                        
+                        <button class="btn-info" onclick="openEditCouponModal('${coupon.id}')" title="쿠폰 수정">✏️ 수정</button>
+                        <button class="btn-danger" onclick="deleteCoupon('${coupon.id}')" title="쿠폰 삭제">🗑️ 삭제</button>
+                    </div>
+                </div>
+
+                <div class="account-details">
+                    <div class="detail-item">
+                        <div class="detail-label">🏷️ 쿠폰 코드</div>
+                        <div class="detail-value">${coupon.couponCode || '미설정'}</div>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <div class="detail-label">📅 생성일</div>
+                        <div class="detail-value">${new Date(coupon.createdAt).toLocaleString()}</div>
+                    </div>
+                    
+                </div>
+            </div>
+        `).join('');
+        
+        container.innerHTML = couponsHtml;
+    }
+
+    // 기프티콘 옵션 로드
+    async function loadGifticonOptions() {
+        try {
+            const response = await fetch('/api/admin/gifticons?pageNumber=0&pageSize=100');
+            const result = await response.json();
+            
+            if (result.resultCode === 200) {
+                const select = document.getElementById('gifticonSelect');
+                result.data.forEach(gifticon => {
+                    const option = document.createElement('option');
+                    option.value = gifticon.id;
+                    option.textContent = `${gifticon.name} (${gifticon.price.toLocaleString()}원)`;
+                    select.appendChild(option);
+                });
+            }
+        } catch (error) {
+            console.error('기프티콘 옵션 로딩 실패:', error);
+        }
+    }
+
+    // 쿠폰 코드 옵션 로드 (공통코드 030)
+    async function loadCouponCodeOptions() {
+        try {
+            const response = await fetch('/api/admin/codes?groupCode=030&pageNumber=0&pageSize=100');
+            const result = await response.json();
+            
+            if (result.resultCode === 200) {
+                const select = document.getElementById('couponCodeSelect');
+                result.data.forEach(code => {
+                    const option = document.createElement('option');
+                    option.value = code.code;
+                    option.textContent = `${code.code} - ${code.codeName}`;
+                    select.appendChild(option);
+                });
+            }
+        } catch (error) {
+            console.error('쿠폰 코드 옵션 로딩 실패:', error);
+        }
+    }
+
+    // 쿠폰 생성
+    async function createCoupon(e) {
+        e.preventDefault();
+
+        const gifticonId = document.getElementById('gifticonSelect').value;
+        const couponCode = document.getElementById('couponCodeSelect').value;
+
+        if (!gifticonId || !couponCode || !expiredAt) {
+            alert('모든 필수 필드를 입력해주세요.');
+            return;
+        }
+
+        
+
+        const couponData = {
+            gifticonId: gifticonId,
+            couponCode: couponCode,
+        };
+
+        try {
+            const response = await fetch('/api/admin/coupons', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(couponData)
+            });
+
+            const result = await response.json();
+
+            if (result.resultCode === 200) {
+                alert('쿠폰이 성공적으로 등록되었습니다.');
+                document.querySelector('.modal-overlay').remove();
+                refreshStats();
+            } else {
+                alert('등록 실패: ' + result.message);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('등록 중 오류가 발생했습니다: ' + error.message);
+        }
+    }
+
+    // 쿠폰 수정 모달
+    async function openEditCouponModal(couponId) {
+        try {
+            const response = await fetch(`/api/admin/coupons/${couponId}`);
+            const result = await response.json();
+
+            if (result.resultCode !== 200) {
+                alert('쿠폰 정보를 불러오는데 실패했습니다.');
+                return;
+            }
+
+            const coupon = result.data;
+            const modal = createModal('쿠폰 수정');
+            const body = modal.querySelector('.modal-body');
+
+            body.innerHTML = `
+                <form id="editCouponForm">
+                    <input type="hidden" id="editCouponId" value="${coupon.id}">
+                    
+                    <div class="form-group">
+                        <label class="form-label">🎁 기프티콘 선택</label>
+                        <select id="editGifticonSelect" class="form-select" required>
+                            <option value="">기프티콘을 선택하세요</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">🏷️ 쿠폰 코드</label>
+                        <select id="editCouponCodeSelect" class="form-select" required>
+                            <option value="">쿠폰 코드를 선택하세요</option>
+                        </select>
+                    </div>
+                    
+                    
+                    
+                    <div class="modal-form-actions">
+                        <button type="button" class="btn-secondary" onclick="this.closest('.modal-overlay').remove()">취소</button>
+                        <button type="submit" class="btn-warning">✏️ 수정</button>
+                    </div>
+                </form>
+            `;
+
+            document.body.appendChild(modal);
+
+            // 기프티콘 옵션 로드
+            await loadEditGifticonOptions(coupon.gifticonId);
+            
+            // 쿠폰 코드 옵션 로드
+            await loadEditCouponCodeOptions(coupon.couponCode);
+
+            // 폼 제출 이벤트
+            document.getElementById('editCouponForm').addEventListener('submit', (e) => updateCoupon(e, couponId));
+
+        } catch (error) {
+            console.error('쿠폰 수정 모달 오픈 실패:', error);
+            alert('쿠폰 정보 로딩 중 오류가 발생했습니다.');
+        }
+    }
+
+    // 수정용 기프티콘 옵션 로드
+    async function loadEditGifticonOptions(selectedGifticonId) {
+        try {
+            const response = await fetch('/api/admin/gifticons?pageNumber=0&pageSize=100');
+            const result = await response.json();
+            
+            if (result.resultCode === 200) {
+                const select = document.getElementById('editGifticonSelect');
+                result.data.forEach(gifticon => {
+                    const option = document.createElement('option');
+                    option.value = gifticon.id;
+                    option.textContent = `${gifticon.name} (${gifticon.price.toLocaleString()}원)`;
+                    if (gifticon.id === selectedGifticonId) {
+                        option.selected = true;
+                    }
+                    select.appendChild(option);
+                });
+            }
+        } catch (error) {
+            console.error('기프티콘 옵션 로딩 실패:', error);
+        }
+    }
+
+    // 수정용 쿠폰 코드 옵션 로드
+    async function loadEditCouponCodeOptions(selectedCouponCode) {
+        try {
+            const response = await fetch('/api/admin/codes?groupCode=030&pageNumber=0&pageSize=100');
+            const result = await response.json();
+            
+            if (result.resultCode === 200) {
+                const select = document.getElementById('editCouponCodeSelect');
+                result.data.forEach(code => {
+                    const option = document.createElement('option');
+                    option.value = code.code;
+                    option.textContent = `${code.code} - ${code.codeName}`;
+                    if (code.code === selectedCouponCode) {
+                        option.selected = true;
+                    }
+                    select.appendChild(option);
+                });
+            }
+        } catch (error) {
+            console.error('쿠폰 코드 옵션 로딩 실패:', error);
+        }
+    }
+
+    // 쿠폰 수정
+    async function updateCoupon(e, couponId) {
+        e.preventDefault();
+
+        const gifticonId = document.getElementById('editGifticonSelect').value;
+        const couponCode = document.getElementById('editCouponCodeSelect').value;
+
+        if (!gifticonId || !couponCode || !expiredAt) {
+            alert('모든 필수 필드를 입력해주세요.');
+            return;
+        }
+
+        const couponData = {
+            gifticonId: gifticonId,
+            couponCode: couponCode
+        };
+
+        try {
+            const response = await fetch(`/api/admin/coupons/${couponId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(couponData)
+            });
+
+            const result = await response.json();
+
+            if (result.resultCode === 200) {
+                alert('쿠폰이 성공적으로 수정되었습니다.');
+                document.querySelector('.modal-overlay').remove();
+                loadCouponsData();
+            } else {
+                alert('수정 실패: ' + result.message);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('수정 중 오류가 발생했습니다: ' + error.message);
+        }
+    }
+
+    // 쿠폰 상태 토글
+    async function toggleCouponStatus(couponId, newStatus) {
+        try {
+            const response = await fetch(`/api/admin/coupons/${couponId}/status`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ isActive: newStatus })
+            });
+
+            const result = await response.json();
+
+            if (result.resultCode === 200) {
+                alert('상태가 변경되었습니다.');
+                loadCouponsData();
+            } else {
+                alert('상태 변경 실패: ' + result.message);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('상태 변경 중 오류가 발생했습니다.');
+        }
+    }
+
+    // 쿠폰 삭제
+    async function deleteCoupon(couponId) {
+        if (!confirm('이 쿠폰을 정말 삭제하시겠습니까?\n이 작업은 되돌릴 수 없습니다.')) {
+            return;
+        }
+
+        try {
+            const response = await fetch(`/api/admin/coupons/${couponId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            const result = await response.json();
+
+            if (result.resultCode === 200) {
+                alert('쿠폰이 성공적으로 삭제되었습니다.');
+                loadCouponsData();
+                refreshStats();
+            } else {
+                alert('삭제 실패: ' + result.message);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('삭제 중 오류가 발생했습니다: ' + error.message);
+        }
+    }
+
+    // 통계에 쿠폰 개수 추가
+    async function loadDashboardStats() {
+        try {
+            const [accountsRes, groupCodesRes, codesRes, gifticonsRes, rouletteEventsRes, couponsRes] = await Promise.all([
+                fetch('/api/admin/accounts/count'),
+                fetch('/api/admin/group-codes/count'),
+                fetch('/api/admin/codes/count'),
+                fetch('/api/admin/gifticons/count'),
+                fetch('/api/admin/roulette/events/count'),
+                fetch('/api/admin/coupons/count')
+            ]);
+
+            // 기존 통계들...
+            if (accountsRes.ok) {
+                const data = await accountsRes.json();
+                document.getElementById('totalAccounts').textContent = data.data?.toLocaleString() || '0';
+            } else {
+                document.getElementById('totalAccounts').textContent = 'N/A';
+            }
+
+            if (groupCodesRes.ok) {
+                const data = await groupCodesRes.json();
+                document.getElementById('totalGroupCodes').textContent = data.data?.toLocaleString() || '0';
+            } else {
+                document.getElementById('totalGroupCodes').textContent = 'N/A';
+            }
+
+            if (codesRes.ok) {
+                const data = await codesRes.json();
+                document.getElementById('totalCodes').textContent = data.data?.toLocaleString() || '0';
+            } else {
+                document.getElementById('totalCodes').textContent = 'N/A';
+            }
+
+            if (gifticonsRes.ok) {
+                const data = await gifticonsRes.json();
+                document.getElementById('totalGifticons').textContent = data.data?.toLocaleString() || '0';
+            } else {
+                document.getElementById('totalGifticons').textContent = 'N/A';
+            }
+
+            // 룰렛 이벤트 통계
+            const rouletteEventsElement = document.getElementById('totalRouletteEvents');
+            if (rouletteEventsElement) {
+                if (rouletteEventsRes.ok) {
+                    const data = await rouletteEventsRes.json();
+                    rouletteEventsElement.textContent = data.data?.toLocaleString() || '0';
+                } else {
+                    rouletteEventsElement.textContent = 'N/A';
+                }
+            }
+
+            // 쿠폰 통계 추가
+            const couponsElement = document.getElementById('totalCoupons');
+            if (couponsElement) {
+                if (couponsRes.ok) {
+                    const data = await couponsRes.json();
+                    couponsElement.textContent = data.data?.toLocaleString() || '0';
+                } else {
+                    couponsElement.textContent = 'N/A';
+                }
+            }
+
+        } catch (error) {
+            console.error('통계 로딩 실패:', error);
+            document.getElementById('totalAccounts').textContent = 'Error';
+            document.getElementById('totalGroupCodes').textContent = 'Error';
+            document.getElementById('totalCodes').textContent = 'Error';
+            document.getElementById('totalGifticons').textContent = 'Error';
+            
+            const rouletteEventsElement = document.getElementById('totalRouletteEvents');
+            if (rouletteEventsElement) {
+                rouletteEventsElement.textContent = 'Error';
+            }
+            
+            const couponsElement = document.getElementById('totalCoupons');
+            if (couponsElement) {
+                couponsElement.textContent = 'Error';
+            }
+        }
+    }
     // 페이지 로드시 통계 초기화
     window.addEventListener('DOMContentLoaded', () => {
         loadDashboardStats();

@@ -18,12 +18,12 @@ public class GifticonController {
     private final GifticonService gifticonService;
 
     @GetMapping("/gifticons")
-    public ResponseEntity<ApiResponse<List<GifticonResponseDto>>> listGifticon(int pageNumber, int pageSize) {
+    public ResponseEntity<ApiResponse<List<GifticonResponseDto>>> listGifticon(@RequestParam("pageNumber")int pageNumber, @RequestParam("pageSize")int pageSize) {
         return ResponseEntity.ok(gifticonService.listGifticon(pageNumber, pageSize));
     }
 
     @GetMapping("/gifticons/{id}")
-    public ResponseEntity<ApiResponse<GifticonResponseDto>> detailGifticon(@PathVariable String id) {
+    public ResponseEntity<ApiResponse<GifticonResponseDto>> detailGifticon(@PathVariable("id") String id) {
         return ResponseEntity.ok(gifticonService.detailGifticon(id));
     }
 
@@ -43,7 +43,7 @@ public class GifticonController {
     }
 
     @DeleteMapping("/gifticons/{id}")
-    public ResponseEntity<ApiResponse<Void>> deleteGifticon(@PathVariable String id) {
+    public ResponseEntity<ApiResponse<Void>> deleteGifticon(@PathVariable("id") String id) {
         return ResponseEntity.ok(gifticonService.deleteGifticon(id));
     }
 
