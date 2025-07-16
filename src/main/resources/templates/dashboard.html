@@ -2502,34 +2502,41 @@
         body.innerHTML = `
             <form id="rouletteEventForm">
                 <div class="form-group">
-                    <label class="form-label">🎯 이벤트 제목</label>
+                    <label class="form-label">이벤트 제목</label>
                     <input type="text" id="eventTitle" class="form-input" placeholder="예: 설날 특별 룰렛" required>
                 </div>
                 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
                     <div class="form-group">
-                        <label class="form-label">📅 시작 날짜</label>
+                        <label class="form-label">시작 날짜</label>
                         <input type="datetime-local" id="startDate" class="form-input" required>
                     </div>
                     <div class="form-group">
-                        <label class="form-label">📅 종료 날짜</label>
+                        <label class="form-label">종료 날짜</label>
                         <input type="datetime-local" id="endDate" class="form-input" required>
                     </div>
                 </div>
                 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
                     <div class="form-group">
-                        <label class="form-label">🏆 최대 당첨자 수</label>
+                        <label class="form-label">최대 당첨자 수</label>
                         <input type="number" id="maxWinners" class="form-input" min="1" placeholder="예: 100" required>
                     </div>
                     <div class="form-group">
-                        <label class="form-label">🎲 당첨 확률 (%)</label>
+                        <label class="form-label">당첨 확률 (%)</label>
                         <input type="number" id="winProbability" class="form-input" min="0" max="100" step="0.01" placeholder="예: 15.5" required>
                     </div>
                 </div>
                 
                 <div class="form-group">
-                    <label class="form-label">⚡ 활성화 상태</label>
+                    <label class="form-label">보상 쿠폰</label>
+                    <select id="rewardCouponSelect" class="form-select" required>
+                        <option value="">보상으로 지급할 쿠폰을 선택하세요</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">활성화 상태</label>
                     <select id="isActive" class="form-select">
                         <option value="true">활성화</option>
                         <option value="false">비활성화</option>
@@ -2538,7 +2545,7 @@
                 
                 <div class="modal-form-actions">
                     <button type="button" class="btn-secondary" onclick="this.closest('.modal-overlay').remove()">취소</button>
-                    <button type="submit" class="btn-success">🎯 등록</button>
+                    <button type="submit" class="btn-success">등록</button>
                 </div>
             </form>
         `;
@@ -2553,10 +2560,30 @@
         document.getElementById('startDate').value = now.toISOString().slice(0, 16);
         document.getElementById('endDate').value = tomorrow.toISOString().slice(0, 16);
 
+        // 쿠폰 목록 로드
+        loadCouponOptionsForRoulette();
+
         // 폼 제출 이벤트
         document.getElementById('rouletteEventForm').addEventListener('submit', createRouletteEvent);
     }
-
+    async function loadCouponOptionsForRoulette() {
+        try {
+            const response = await fetch('/api/admin/coupons?pageNumber=0&pageSize=100');
+            const result = await response.json();
+            
+            if (result.resultCode === 200) {
+                const select = document.getElementById('rewardCouponSelect');
+                result.data.forEach(coupon => {
+                    const option = document.createElement('option');
+                    option.value = coupon.id;
+                    option.textContent = `${coupon.gifticonName} (${coupon.couponCode})`;
+                    select.appendChild(option);
+                });
+            }
+        } catch (error) {
+            console.error('쿠폰 옵션 로딩 실패:', error);
+        }
+    }
     // 룰렛 이벤트 목록 모달 열기
     function loadRouletteEvents() {
         const modal = createModal('룰렛 이벤트 목록');
@@ -2606,7 +2633,7 @@
             container.innerHTML = `
                 <div class="no-data">등록된 룰렛 이벤트가 없습니다.</div>
                 <div style="text-align: center; margin-top: 2rem;">
-                    <button class="btn-success" onclick="openRouletteEventModal()">➕ 새 이벤트 추가</button>
+                    <button class="btn-success" onclick="openRouletteEventModal()">새 이벤트 추가</button>
                 </div>
             `;
             return;
@@ -2616,44 +2643,48 @@
             <div class="account-card" style="border-left: 4px solid #9c27b0;">
                 <div class="account-header">
                     <div class="account-main-info">
-                        <div class="account-id">🎲 ${event.id}</div>
-                        <div class="account-name">🎯 ${event.title}</div>
+                        <div class="account-id">${event.id}</div>
+                        <div class="account-name">${event.title}</div>
                     </div>
                     <div class="account-actions">
                         <button class="btn-warning" onclick="toggleEventStatus('${event.id}', ${!event.isActive})" title="상태 변경">
-                            ${event.isActive ? '⏸️ 비활성화' : '▶️ 활성화'}
+                            ${event.isActive ? '비활성화' : '활성화'}
                         </button>
-                        <button class="btn-danger" onclick="deleteRouletteEvent('${event.id}')" title="이벤트 삭제">🗑️ 삭제</button>
+                        <button class="btn-danger" onclick="deleteRouletteEvent('${event.id}')" title="이벤트 삭제">삭제</button>
                     </div>
                 </div>
 
                 <div class="account-details">
                     <div class="detail-item">
-                        <div class="detail-label">📅 시작 날짜</div>
+                        <div class="detail-label">시작 날짜</div>
                         <div class="detail-value">${new Date(event.startDate).toLocaleString()}</div>
                     </div>
                     <div class="detail-item">
-                        <div class="detail-label">📅 종료 날짜</div>
+                        <div class="detail-label">종료 날짜</div>
                         <div class="detail-value">${new Date(event.endDate).toLocaleString()}</div>
                     </div>
                     <div class="detail-item">
-                        <div class="detail-label">🏆 당첨자</div>
+                        <div class="detail-label">당첨자</div>
                         <div class="detail-value">${event.currentWinners} / ${event.maxWinners} 명</div>
                     </div>
                     <div class="detail-item">
-                        <div class="detail-label">🎲 당첨 확률</div>
+                        <div class="detail-label">당첨 확률</div>
                         <div class="detail-value">${(event.winProbability * 100).toFixed(2)}%</div>
                     </div>
                     <div class="detail-item">
-                        <div class="detail-label">⚡ 상태</div>
+                        <div class="detail-label">보상 쿠폰</div>
+                        <div class="detail-value">${event.rewardGifticonName || '미설정'} (${event.rewardCouponName || '미설정'})</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">상태</div>
                         <div class="detail-value">
                             <span style="color: ${event.isActive ? '#28a745' : '#dc3545'}; font-weight: bold;">
-                                ${event.isActive ? '✅ 활성' : '❌ 비활성'}
+                                ${event.isActive ? '활성' : '비활성'}
                             </span>
                         </div>
                     </div>
                     <div class="detail-item">
-                        <div class="detail-label">📅 생성일</div>
+                        <div class="detail-label">생성일</div>
                         <div class="detail-value">${new Date(event.createdAt).toLocaleString()}</div>
                     </div>
                 </div>
@@ -2672,9 +2703,10 @@
         const endDate = document.getElementById('endDate').value;
         const maxWinners = parseInt(document.getElementById('maxWinners').value);
         const winProbabilityPercent = parseFloat(document.getElementById('winProbability').value);
+        const rewardCouponId = document.getElementById('rewardCouponSelect').value;
         const isActive = document.getElementById('isActive').value === 'true';
 
-        if (!title || !startDate || !endDate || !maxWinners || isNaN(winProbabilityPercent)) {
+        if (!title || !startDate || !endDate || !maxWinners || isNaN(winProbabilityPercent) || !rewardCouponId) {
             alert('모든 필드를 올바르게 입력해주세요.');
             return;
         }
@@ -2698,6 +2730,7 @@
             endDate: endDate,
             maxWinners: maxWinners,
             winProbability: winProbabilityDecimal,
+            rewardCouponId: rewardCouponId,
             isActive: isActive
         };
 
@@ -2715,7 +2748,7 @@
             if (result.resultCode === 200) {
                 alert('룰렛 이벤트가 성공적으로 등록되었습니다.');
                 document.querySelector('.modal-overlay').remove();
-                refreshStats(); // 통계 새로고침
+                refreshStats();
             } else {
                 alert('등록 실패: ' + result.message);
             }
