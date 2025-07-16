@@ -1,6 +1,5 @@
 package ureka.team3.utong_admin.roullette.dto;
 
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -39,6 +38,12 @@ public class RouletteEventDto {
 
     private LocalDateTime createdAt;
 
+    private String rewardCouponId;
+
+    private String rewardCouponName;
+
+    private String rewardGifticonName;
+
     public static RouletteEventDto from(RouletteEvent event) {
         return RouletteEventDto.builder()
                 .id(event.getId())
@@ -50,6 +55,10 @@ public class RouletteEventDto {
                 .winProbability(event.getWinProbability())
                 .isActive(event.getIsActive())
                 .createdAt(event.getCreatedAt())
+                .rewardCouponId(event.getRewardCouponId())
+                .rewardCouponName(event.getRewardCoupon() != null ? event.getRewardCoupon().getCouponCode() : null)
+                .rewardGifticonName(event.getRewardCoupon() != null && event.getRewardCoupon().getGifticon() != null 
+                    ? event.getRewardCoupon().getGifticon().getName() : null)
                 .build();
     }
 }
