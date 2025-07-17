@@ -2883,9 +2883,13 @@
 
         body.innerHTML = `
             <form id="createCouponForm">
+	        	<div class="form-group">
+		            <label class="form-label">쿠폰 이름</label>
+		            <input type="text" id="couponName" class="form-control" placeholder="쿠폰 이름을 입력하세요">
+		        </div>
                 <div class="form-group">
                     <label class="form-label">🎁 기프티콘 선택</label>
-                    <select id="gifticonSelect" class="form-select" required>
+                    <select id="gifticonSelect" class="form-select">
                         <option value="">기프티콘을 선택하세요</option>
                     </select>
                 </div>
@@ -2908,19 +2912,22 @@
 
         document.body.appendChild(modal);
 
-        // 기프티콘 목록 로드
-        loadGifticonOptions();
-        
-        // 쿠폰 코드 옵션 로드 (공통코드 030)
-        loadCouponCodeOptions();
+        setTimeout(() => {
+            // 기프티콘 목록 로드
+            loadGifticonOptions();
+            
+            // 쿠폰 코드 옵션 로드 (공통코드 030)
+            loadCouponCodeOptions();
 
-        // 기본 만료일 설정 (7일 후)
-        const weekLater = new Date();
-        weekLater.setDate(weekLater.getDate() + 7);
-        document.getElementById('expiredAt').value = weekLater.toISOString().slice(0, 16);
-
-        // 폼 제출 이벤트
-        document.getElementById('createCouponForm').addEventListener('submit', createCoupon);
+            // 폼 제출 이벤트
+            const form = document.getElementById('createCouponForm');
+            if (form) {
+                form.addEventListener('submit', createCoupon);
+                console.log('쿠폰 폼 이벤트 리스너 등록됨');
+            } else {
+                console.error('createCouponForm을 찾을 수 없습니다');
+            }
+        }, 0);
     }
 
     // 쿠폰 목록 모달 열기
@@ -3061,19 +3068,21 @@
 
     // 쿠폰 생성
     async function createCoupon(e) {
-        e.preventDefault();
-
+    	alert("s");
+    	e.preventDefault()
+		const id = document.getElementById('couponName').value;
         const gifticonId = document.getElementById('gifticonSelect').value;
         const couponCode = document.getElementById('couponCodeSelect').value;
 
-        if (!gifticonId || !couponCode || !expiredAt) {
-            alert('모든 필수 필드를 입력해주세요.');
+        if (!couponCode ) {
+            alert('쿠폰코드는입력');
             return;
         }
 
         
 
         const couponData = {
+        	id: id,
             gifticonId: gifticonId,
             couponCode: couponCode,
         };
