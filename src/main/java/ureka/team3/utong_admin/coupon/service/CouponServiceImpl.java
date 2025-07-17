@@ -67,9 +67,14 @@ public class CouponServiceImpl implements CouponService {
     @Transactional
     public ApiResponse<Void> createCoupon(CouponDto couponDto) {
         try {
-            Gifticon gifticon = gifticonRepository.findById(couponDto.getGifticonId())
-                    .orElseThrow(() -> new BusinessException(ErrorCode.INVALID_INPUT_VALUE, "존재하지 않는 기프티콘입니다."));
-            couponDto.setId(UUID.randomUUID().toString());
+            Gifticon gifticon = null;
+            
+            if (couponDto.getGifticonId() != null && !couponDto.getGifticonId().isEmpty()) {
+                gifticon = gifticonRepository.findById(couponDto.getGifticonId())
+                        .orElseThrow(() -> new BusinessException(ErrorCode.INVALID_INPUT_VALUE, "존재하지 않는 기프티콘입니다."));
+            }
+            
+//            couponDto.setId(UUID.randomUUID().toString());
             Coupon coupon = Coupon.of(couponDto, gifticon);
             couponRepository.save(coupon);
 

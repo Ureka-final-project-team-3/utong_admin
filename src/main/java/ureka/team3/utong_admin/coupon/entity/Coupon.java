@@ -29,7 +29,7 @@ public class Coupon {
     private String id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "gifticon_id", nullable = false)
+    @JoinColumn(name = "gifticon_id")
     private Gifticon gifticon;
 
 
