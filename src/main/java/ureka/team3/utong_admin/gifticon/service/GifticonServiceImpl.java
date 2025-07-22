@@ -33,11 +33,23 @@ public class GifticonServiceImpl implements GifticonService {
 
         try {
 
-            log.info("받은 데이터 - name: {}, price: {}, description: {}, image: {}",
+            log.info("받은 데이터 - name: {}, price: {}, description: {}, category: {}, image: {}",
                     gifticonRequestDto.getName(),
                     gifticonRequestDto.getPrice(),
                     gifticonRequestDto.getDescription(),
+                    gifticonRequestDto.getCategory(),
                     gifticonRequestDto.getImage() != null ? gifticonRequestDto.getImage().getOriginalFilename() : "null");
+
+            // 데이터 검증
+            if (gifticonRequestDto.getName() == null || gifticonRequestDto.getName().trim().isEmpty()) {
+                throw new FileProcessingException("기프티콘 이름이 비어있습니다.");
+            }
+            if (gifticonRequestDto.getPrice() == null) {
+                throw new FileProcessingException("가격이 설정되지 않았습니다.");
+            }
+            if (gifticonRequestDto.getCategory() == null || gifticonRequestDto.getCategory().trim().isEmpty()) {
+                throw new FileProcessingException("카테고리가 설정되지 않았습니다.");
+            }
 
             if(gifticonRequestDto.getImage() != null && !gifticonRequestDto.getImage().isEmpty()) {
                 imageUrl = s3Service.uploadFile(gifticonRequestDto.getImage());
@@ -49,7 +61,8 @@ public class GifticonServiceImpl implements GifticonService {
                     gifticonRequestDto.getPrice(),
                     gifticonRequestDto.getDescription(),
                     imageUrl,
-                    imageKey
+                    imageKey,
+                    gifticonRequestDto.getCategory()
             );
 
             Gifticon savedGifticon = gifticonRepository.save(gifticon);
@@ -57,7 +70,7 @@ public class GifticonServiceImpl implements GifticonService {
 
             return ApiResponse.success(GifticonResponseDto.from(savedGifticon));
         } catch (Exception e) {
-            log.info("기프티콘 생성 중 오류 발생: {}", e.getMessage());
+            log.error("기프티콘 생성 중 오류 발생: {}", e.getMessage(), e);
             throw new FileProcessingException();
         }
     }
@@ -103,13 +116,12 @@ public class GifticonServiceImpl implements GifticonService {
             gifticon.setName(gifticonRequestDto.getName());
             gifticon.setPrice(gifticonRequestDto.getPrice());
             gifticon.setDescription(gifticonRequestDto.getDescription());
+            gifticon.setCategory(gifticonRequestDto.getCategory());
 
             if(gifticonRequestDto.getImage() != null && !gifticonRequestDto.getImage().isEmpty()) {
-                // 기존 이미지 삭제
                 if (gifticon.getImageKey() != null) {
                     s3Service.deleteFile(gifticon.getImageKey());
                 }
-                // 새 이미지 업로드
                 String newImageUrl = s3Service.uploadFile(gifticonRequestDto.getImage());
                 String newImageKey = s3Service.extractKeyFromUrl(newImageUrl);
 
@@ -133,7 +145,6 @@ public class GifticonServiceImpl implements GifticonService {
             Gifticon gifticon = gifticonRepository.findById(id)
                     .orElseThrow(() -> new FileProcessingException("해당 기프티콘이 존재하지 않습니다."));
 
-            // 이미지가 존재하면 S3에서 삭제
             if (gifticon.getImageKey() != null) {
                 s3Service.deleteFile(gifticon.getImageKey());
             }

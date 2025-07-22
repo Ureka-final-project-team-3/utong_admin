@@ -4,8 +4,9 @@ import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @Getter
+@Setter
 @ToString
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @AllArgsConstructor
 public class GifticonRequestDto {
 
@@ -17,4 +18,5 @@ public class GifticonRequestDto {
 
     private MultipartFile image;
 
+    private String category;
 }

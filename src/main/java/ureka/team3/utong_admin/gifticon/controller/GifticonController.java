@@ -36,7 +36,7 @@ public class GifticonController {
 
     @PutMapping("/gifticons/{id}")
     public ResponseEntity<ApiResponse<GifticonResponseDto>> updateGifticon(
-            @PathVariable String id,
+            @PathVariable("id") String id,
             @ModelAttribute GifticonRequestDto gifticonRequestDto
     ) {
         return ResponseEntity.ok(gifticonService.updateGifticon(id, gifticonRequestDto));
@@ -52,5 +52,3 @@ public class GifticonController {
         return ResponseEntity.ok(gifticonService.countGifticon());
     }
 }
-
-

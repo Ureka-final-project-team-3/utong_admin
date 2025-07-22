@@ -20,6 +20,10 @@ public class GifticonResponseDto {
 
     private String imageUrl;
 
+    private String category;
+
+    private String categoryName;
+
     public static GifticonResponseDto from(Gifticon gifticon) {
         GifticonResponseDto responseDto = new GifticonResponseDto();
 
@@ -28,6 +32,7 @@ public class GifticonResponseDto {
         responseDto.description = gifticon.getDescription();
         responseDto.price = gifticon.getPrice();
         responseDto.imageUrl = gifticon.getImageUrl();
+        responseDto.category = gifticon.getCategory();
 
         return responseDto;
     }

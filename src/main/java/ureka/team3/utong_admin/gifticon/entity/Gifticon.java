@@ -32,8 +32,9 @@ public class Gifticon {
 
     @Column(name = "image_key", length = 500)
     private String imageKey;
-
-    public static Gifticon of(String name, Long price, String description, String imageUrl, String imageKey) {
+    @Column(name = "category", columnDefinition = "CHAR(3)")
+    private String category;
+    public static Gifticon of(String name, Long price, String description, String imageUrl, String imageKey, String category) {
         Gifticon gifticon = new Gifticon();
 
         gifticon.name = name;
@@ -41,7 +42,7 @@ public class Gifticon {
         gifticon.description = description;
         gifticon.imageUrl = imageUrl;
         gifticon.imageKey = imageKey;
-
+        gifticon.category = category;
         return gifticon;
     }
 

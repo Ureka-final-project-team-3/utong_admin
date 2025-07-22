@@ -549,7 +549,16 @@
             transform: translateY(-1px);
             box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
         }
-
+		.gifticon-category {
+		    font-size: 0.9rem;
+		    color: #fff;
+		    background: linear-gradient(135deg, #9b59b6, #8e44ad);
+		    padding: 0.3rem 0.8rem;
+		    border-radius: 15px;
+		    display: inline-block;
+		    margin-left: 0.5rem;
+		    font-weight: 600;
+		}
         .btn-secondary {
             background: #6c757d;
             color: white;
@@ -1757,26 +1766,34 @@
                 `;
 
             const gifticonCards = gifticons.map(gifticon => `
-                    <div class="gifticon-card">
-                        <div class="gifticon-header">
-                            <div style="display: flex; gap: 1.5rem; align-items: flex-start;">
-                                ${gifticon.imageUrl ? `<img src="${gifticon.imageUrl}" alt="${gifticon.name}" class="gifticon-image">` : '<div class="gifticon-image" style="background: #f8f9fa; display: flex; align-items: center; justify-content: center; color: #6c757d;">이미지 없음</div>'}
-                                <div class="gifticon-main-info">
-                                    <div class="gifticon-id">🎁 ${gifticon.id}</div>
-                                    <div class="gifticon-name">🏷️ ${gifticon.name}</div>
-                                    ${gifticon.description ? `<div class="gifticon-desc">📝 ${gifticon.description}</div>` : ''}
-                                    <div class="gifticon-price">💰 ${gifticon.price?.toLocaleString() || 0}원</div>
-                                </div>
-                            </div>
-                            <div class="gifticon-actions">
-                                <button class="btn-warning" onclick="openEditGifticonModal('${gifticon.id}')" title="기프티콘 수정">✏️ 수정</button>
-                                <button class="btn-danger" onclick="deleteGifticon('${gifticon.id}')" title="기프티콘 삭제">🗑️ 삭제</button>
-                            </div>
-                        </div>
-                    </div>
-                `).join('');
-
-            body.innerHTML = headerSection + gifticonCards;
+	            <div class="gifticon-card">
+	                <div class="gifticon-header">
+	                    <div style="display: flex; gap: 1.5rem; align-items: flex-start;">
+	                        ${gifticon.imageUrl ? `<img src="${gifticon.imageUrl}" alt="${gifticon.name}" class="gifticon-image">` : '<div class="gifticon-image" style="background: #f8f9fa; display: flex; align-items: center; justify-content: center; color: #6c757d;">이미지 없음</div>'}
+	                        <div class="gifticon-main-info">
+	                            <div class="gifticon-id">${gifticon.id}</div>
+	                            <div class="gifticon-name">${gifticon.name}</div>
+	                            ${gifticon.description ? `<div class="gifticon-desc">${gifticon.description}</div>` : ''}
+	                            <div style="display: flex; align-items: center; gap: 0.5rem; margin-top: 0.8rem;">
+	                                <div class="gifticon-price">${gifticon.price?.toLocaleString() || 0}원</div>
+	                                ${gifticon.category ? `<div class="gifticon-category" id="category-${gifticon.id}">${gifticon.category}</div>` : ''}
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div class="gifticon-actions">
+	                        <button class="btn-warning" onclick="openEditGifticonModal('${gifticon.id}')" title="기프티콘 수정">수정</button>
+	                        <button class="btn-danger" onclick="deleteGifticon('${gifticon.id}')" title="기프티콘 삭제">삭제</button>
+	                    </div>
+	                </div>
+	            </div>
+	        `).join('');
+	
+	        body.innerHTML = headerSection + gifticonCards;
+	        gifticons.forEach(gifticon => {
+	            if (gifticon.category) {
+	                loadCategoryName(gifticon.id, gifticon.category);
+	            }
+	        });
         }
 
         document.body.appendChild(modal);
@@ -1788,34 +1805,43 @@
         const body = modal.querySelector('.modal-body');
 
         body.innerHTML = `
-                <form id="createGifticonForm" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <label class="form-label">🏷️ 기프티콘명</label>
-                        <input type="text" id="newGifticonName" class="form-input" placeholder="예: 스타벅스 아메리카노" required>
+            <form id="createGifticonForm" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label class="form-label">기프티콘명</label>
+                    <input type="text" id="newGifticonName" class="form-input" placeholder="예: 스타벅스 아메리카노" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">설명</label>
+                    <textarea id="newGifticonDesc" class="form-textarea" placeholder="기프티콘에 대한 설명을 입력하세요"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">가격 (원)</label>
+                    <input type="number" id="newGifticonPrice" class="form-input" placeholder="예: 4500" min="0" step="100" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">카테고리</label>
+                    <select id="newGifticonCategory" class="form-select" required>
+                        <option value="">카테고리를 선택하세요</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">이미지</label>
+                    <div class="file-upload">
+                        <input type="file" id="newGifticonImage" accept="image/*">
+                        <label for="newGifticonImage" class="file-upload-label">
+                            <div class="file-upload-text">클릭하여 이미지를 선택하세요</div>
+                        </label>
                     </div>
-                    <div class="form-group">
-                        <label class="form-label">📝 설명</label>
-                        <textarea id="newGifticonDesc" class="form-textarea" placeholder="기프티콘에 대한 설명을 입력하세요"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">💰 가격 (원)</label>
-                        <input type="number" id="newGifticonPrice" class="form-input" placeholder="예: 4500" min="0" step="100" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">🖼️ 이미지</label>
-                        <div class="file-upload">
-                            <input type="file" id="newGifticonImage" accept="image/*">
-                            <label for="newGifticonImage" class="file-upload-label">
-                                <div class="file-upload-text">클릭하여 이미지를 선택하세요</div>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="modal-form-actions">
-                        <button type="button" class="btn-secondary" onclick="this.closest('.modal-overlay').remove()">취소</button>
-                        <button type="submit" class="btn-success">✅ 생성</button>
-                    </div>
-                </form>
-            `;
+                </div>
+                <div class="modal-form-actions">
+                    <button type="button" class="btn-secondary" onclick="this.closest('.modal-overlay').remove()">취소</button>
+                    <button type="submit" class="btn-success">생성</button>
+                </div>
+            </form>
+        `;
+
+        // 카테고리 옵션 로딩 추가
+        loadCategoryOptions();
 
         document.body.appendChild(modal);
 
@@ -1832,77 +1858,124 @@
         // 폼 제출 이벤트
         document.getElementById('createGifticonForm').addEventListener('submit', createGifticon);
     }
-
-    // 기프티콘 수정 모달
-    async function openEditGifticonModal(gifticonId) {
+    async function loadCategoryOptions(selectId = 'newGifticonCategory', selectedValue = '') {
         try {
-            const response = await fetch(`/api/admin/gifticons/${gifticonId}`);
+            const response = await fetch('/api/admin/codes?groupCode=080&pageNumber=0&pageSize=100');
             const data = await response.json();
 
-            if (data.resultCode !== 200) {
-                alert('기프티콘 정보를 불러오는데 실패했습니다.');
-                return;
+            if (data.resultCode === 200) {
+                const select = document.getElementById(selectId);
+                data.data.forEach(category => {
+                    const option = document.createElement('option');
+                    option.value = category.code;
+                    option.textContent = `${category.code} - ${category.codeName}`;
+                    if (category.code === selectedValue) {
+                        option.selected = true;
+                    }
+                    select.appendChild(option);
+                });
             }
-
-            const gifticon = data.data;
-            const modal = createModal('기프티콘 수정');
-            const body = modal.querySelector('.modal-body');
-
-            body.innerHTML = `
-                    <form id="editGifticonForm" enctype="multipart/form-data">
-                        <input type="hidden" id="editGifticonId" value="${gifticon.id}">
-                        <div class="form-group">
-                            <label class="form-label">🏷️ 기프티콘명</label>
-                            <input type="text" id="editGifticonName" class="form-input" value="${gifticon.name}" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">📝 설명</label>
-                            <textarea id="editGifticonDesc" class="form-textarea">${gifticon.description || ''}</textarea>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">💰 가격 (원)</label>
-                            <input type="number" id="editGifticonPrice" class="form-input" value="${gifticon.price}" min="0" step="100" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">🖼️ 현재 이미지</label>
-                            ${gifticon.imageUrl ? `<img src="${gifticon.imageUrl}" alt="${gifticon.name}" style="width: 200px; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;">` : '<div style="color: #6c757d;">이미지가 없습니다.</div>'}
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">🖼️ 새 이미지 (선택사항)</label>
-                            <div class="file-upload">
-                                <input type="file" id="editGifticonImage" accept="image/*">
-                                <label for="editGifticonImage" class="file-upload-label">
-                                    <div class="file-upload-text">클릭하여 새 이미지를 선택하세요</div>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="modal-form-actions">
-                            <button type="button" class="btn-secondary" onclick="this.closest('.modal-overlay').remove()">취소</button>
-                            <button type="submit" class="btn-warning">✏️ 수정</button>
-                        </div>
-                    </form>
-                `;
-
-            document.body.appendChild(modal);
-
-            // 파일 선택 시 라벨 업데이트
-            document.getElementById('editGifticonImage').addEventListener('change', function() {
-                const label = this.nextElementSibling.querySelector('.file-upload-text');
-                if (this.files.length > 0) {
-                    label.textContent = this.files[0].name;
-                } else {
-                    label.textContent = '클릭하여 새 이미지를 선택하세요';
-                }
-            });
-
-            // 폼 제출 이벤트
-            document.getElementById('editGifticonForm').addEventListener('submit', updateGifticon);
-
         } catch (error) {
-            console.error('기프티콘 상세 정보 로딩 실패:', error);
-            alert('기프티콘 정보 로딩 중 오류가 발생했습니다.');
+            console.error('카테고리 옵션 로딩 실패:', error);
         }
     }
+    async function loadCategoryName(gifticonId, categoryCode) {
+        try {
+            const response = await fetch(`/api/admin/codes/080/${categoryCode}`);
+            const data = await response.json();
+            
+            if (data.resultCode === 200) {
+                const categoryElement = document.getElementById(`category-${gifticonId}`);
+                if (categoryElement) {
+                    categoryElement.textContent = `${categoryCode} - ${data.data.codeName}`;
+                }
+            }
+        } catch (error) {
+            console.error('카테고리 이름 로딩 실패:', error);
+        }
+    }
+    // 기프티콘 수정 모달
+    async function openEditGifticonModal(gifticonId) {
+	    try {
+	        const response = await fetch(`/api/admin/gifticons/${gifticonId}`);
+	        const data = await response.json();
+	
+	        if (data.resultCode !== 200) {
+	            alert('기프티콘 정보를 불러오는데 실패했습니다.');
+	            return;
+	        }
+	
+	        const gifticon = data.data;
+	        console.log('불러온 기프티콘 데이터:', gifticon); // 디버깅용
+	
+	        const modal = createModal('기프티콘 수정');
+	        const body = modal.querySelector('.modal-body');
+	
+	        body.innerHTML = `
+	            <form id="editGifticonForm" enctype="multipart/form-data">
+	                <input type="hidden" id="editGifticonId" value="${gifticon.id}">
+	                <div class="form-group">
+	                    <label class="form-label">기프티콘명</label>
+	                    <input type="text" id="editGifticonName" class="form-input" value="${gifticon.name}" required>
+	                </div>
+	                <div class="form-group">
+	                    <label class="form-label">설명</label>
+	                    <textarea id="editGifticonDesc" class="form-textarea">${gifticon.description || ''}</textarea>
+	                </div>
+	                <div class="form-group">
+	                    <label class="form-label">가격 (원)</label>
+	                    <input type="number" id="editGifticonPrice" class="form-input" value="${gifticon.price}" min="0" step="100" required>
+	                </div>
+	                <div class="form-group">
+	                    <label class="form-label">카테고리</label>
+	                    <select id="editGifticonCategory" class="form-select" required>
+	                        <option value="">카테고리를 선택하세요</option>
+	                    </select>
+	                </div>
+	                <div class="form-group">
+	                    <label class="form-label">현재 이미지</label>
+	                    ${gifticon.imageUrl ? `<img src="${gifticon.imageUrl}" alt="${gifticon.name}" style="width: 200px; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;">` : '<div style="color: #6c757d;">이미지가 없습니다.</div>'}
+	                </div>
+	                <div class="form-group">
+	                    <label class="form-label">새 이미지 (선택사항)</label>
+	                    <div class="file-upload">
+	                        <input type="file" id="editGifticonImage" accept="image/*">
+	                        <label for="editGifticonImage" class="file-upload-label">
+	                            <div class="file-upload-text">클릭하여 새 이미지를 선택하세요</div>
+	                        </label>
+	                    </div>
+	                </div>
+	                <div class="modal-form-actions">
+	                    <button type="button" class="btn-secondary" onclick="this.closest('.modal-overlay').remove()">취소</button>
+	                    <button type="submit" class="btn-warning">수정</button>
+	                </div>
+	            </form>
+	        `;
+	
+	        document.body.appendChild(modal);
+	
+	        // 카테고리 옵션 로딩 (await 사용)
+	        await loadCategoryOptions('editGifticonCategory', gifticon.category);
+	        console.log('선택된 카테고리:', gifticon.category); // 디버깅용
+	
+	        // 파일 선택 이벤트
+	        document.getElementById('editGifticonImage').addEventListener('change', function() {
+	            const label = this.nextElementSibling.querySelector('.file-upload-text');
+	            if (this.files.length > 0) {
+	                label.textContent = this.files[0].name;
+	            } else {
+	                label.textContent = '클릭하여 새 이미지를 선택하세요';
+	            }
+	        });
+	
+	        // 폼 제출 이벤트
+	        document.getElementById('editGifticonForm').addEventListener('submit', updateGifticon);
+	
+	    } catch (error) {
+	        console.error('기프티콘 상세 정보 로딩 실패:', error);
+	        alert('기프티콘 정보 로딩 중 오류가 발생했습니다.');
+	    }
+	}
 
     // 기프티콘 생성
     async function createGifticon(e) {
@@ -1912,7 +1985,7 @@
         const description = document.getElementById('newGifticonDesc').value.trim();
         const price = parseInt(document.getElementById('newGifticonPrice').value);
         const image = document.getElementById('newGifticonImage').files[0];
-
+        const category = document.getElementById('newGifticonCategory').value.trim();
         if (!name || isNaN(price)) {
             alert('기프티콘명과 가격은 필수입니다.');
             return;
@@ -1923,6 +1996,7 @@
             formData.append('name', name);
             formData.append('description', description);
             formData.append('price', price);
+            formData.append('category', category);
             if (image) {
                 formData.append('image', image);
             }
@@ -1957,7 +2031,7 @@
         const description = document.getElementById('editGifticonDesc').value.trim();
         const price = parseInt(document.getElementById('editGifticonPrice').value);
         const image = document.getElementById('editGifticonImage').files[0];
-
+        const category = document.getElementById('editGifticonCategory').value;
         if (!name || isNaN(price)) {
             alert('기프티콘명과 가격은 필수입니다.');
             return;
@@ -1968,6 +2042,7 @@
             formData.append('name', name);
             formData.append('description', description);
             formData.append('price', price);
+            formData.append('category', category);
             if (image) {
                 formData.append('image', image);
             }
