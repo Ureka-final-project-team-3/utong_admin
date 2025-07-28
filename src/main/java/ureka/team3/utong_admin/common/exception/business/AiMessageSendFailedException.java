@@ -1,0 +1,18 @@
+package ureka.team3.utong_admin.common.exception.business;
+
+import ureka.team3.utong_admin.common.exception.BusinessException;
+import ureka.team3.utong_admin.common.exception.ErrorCode;
+
+public class AiMessageSendFailedException extends BusinessException {
+  public AiMessageSendFailedException() {
+    super(ErrorCode.AI_MESSAGE_SEND_FAILED);
+  }
+
+  public AiMessageSendFailedException(String customMessage) {
+    super(ErrorCode.AI_MESSAGE_SEND_FAILED, customMessage);
+  }
+
+  public AiMessageSendFailedException(Throwable cause) {
+    super(ErrorCode.AI_MESSAGE_SEND_FAILED, cause.getMessage());
+  }
+}
