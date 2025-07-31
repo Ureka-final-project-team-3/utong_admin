@@ -19,6 +19,8 @@ public class PriceDto {
 
     private Float tax;
 
+    private Float availableTradeRate;
+
     public static PriceDto from(Price price) {
         PriceDto priceDto = new PriceDto();
 
@@ -26,6 +28,7 @@ public class PriceDto {
         priceDto.minimumPrice = price.getMinimumPrice();
         priceDto.minimumRate = price.getMinimumRate();
         priceDto.tax = price.getTax();
+        priceDto.availableTradeRate = price.getAvailableTradeRate();
 
         return priceDto;
     }
