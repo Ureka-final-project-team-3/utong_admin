@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+    <link rel="icon" type="image/x-icon" href="/favicon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>유통 관리자 대시보드</title>
@@ -1679,6 +1681,10 @@
                             <label class="form-label">🏛️ 수수료 (%)</label>
                             <input type="number" id="tax" class="form-input" value="${priceData?.tax || 0}" min="0" max="100" step="0.1" required>
                         </div>
+                        <div class="form-group">
+                            <label class="form-label">🔄 거래 가능 비율 (%)</label>
+                            <input type="number" id="availableTradeRate" class="form-input" value="${priceData?.availableTradeRate || 0}" min="0" max="100" step="0.1" required>
+                        </div>
                     </form>
                     <div class="modal-form-actions">
                         <button type="button" class="btn-secondary" onclick="this.closest('.modal-overlay').remove()">취소</button>
@@ -1695,8 +1701,9 @@
         const minimumPrice = parseInt(document.getElementById('minimumPrice').value);
         const minimumRate = parseFloat(document.getElementById('minimumRate').value);
         const tax = parseFloat(document.getElementById('tax').value);
+        const availableTradeRate = parseFloat(document.getElementById('availableTradeRate').value);
 
-        if (isNaN(minimumPrice) || isNaN(minimumRate) || isNaN(tax)) {
+        if (isNaN(minimumPrice) || isNaN(minimumRate) || isNaN(tax) || isNaN(availableTradeRate)) {
             alert('모든 필드를 올바르게 입력해주세요.');
             return;
         }
@@ -1710,7 +1717,8 @@
                 body: JSON.stringify({
                     minimumPrice: minimumPrice,
                     minimumRate: minimumRate,
-                    tax: tax
+                    tax: tax,
+                    availableTradeRate: availableTradeRate
                 })
             });
 
