@@ -1,142 +1,159 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link rel="icon" type="image/x-icon" href="/favicon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>관리자 로그인</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        
-        .login-container {
-            background: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            width: 100%;
-            max-width: 400px;
-        }
-        
-        h2 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 30px;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 5px;
-            color: #555;
-            font-weight: bold;
-        }
-        
-        input[type="email"], input[type="password"] {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 16px;
-            box-sizing: border-box;
-        }
-        
-        input[type="email"]:focus, input[type="password"]:focus {
-            outline: none;
-            border-color: #007bff;
-            box-shadow: 0 0 5px rgba(0,123,255,0.3);
-        }
-        
-        .login-btn {
-            width: 100%;
-            padding: 12px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        
-        .login-btn:hover {
-            background-color: #0056b3;
-        }
-        
-        .error-message {
-            color: #dc3545;
-            text-align: center;
-            margin-bottom: 20px;
-            padding: 10px;
-            background-color: #f8d7da;
-            border: 1px solid #f5c6cb;
-            border-radius: 4px;
-        }
-        
-        .success-message {
-            color: #155724;
-            text-align: center;
-            margin-bottom: 20px;
-            padding: 10px;
-            background-color: #d4edda;
-            border: 1px solid #c3e6cb;
-            border-radius: 4px;
-        }
-        
-        .admin-info {
-            text-align: center;
-            margin-top: 20px;
-            padding: 15px;
-            background-color: #e9ecef;
-            border-radius: 4px;
-            font-size: 14px;
-            color: #6c757d;
-        }
-    </style>
+    <title>관리자 로그인 - Back Office</title>
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/favicon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
 </head>
 <body>
-    <div class="login-container">
-        <h2>관리자 로그인</h2>
-        
-        <div th:if="${param.error}" class="error-message">
-            이메일 또는 비밀번호가 올바르지 않습니다.
-        </div>
-        
-        <div th:if="${param.logout}" class="success-message">
-            로그아웃되었습니다.
-        </div>
-        
-        <form th:action="@{/auth/login}" method="post">
-            <div class="form-group">
-                <label for="username">이메일:</label>
-                <input type="email" id="username" name="username" required value="admin@naver.com">
+<div class="container">
+    <!-- 좌측 브랜딩 영역 -->
+    <div class="branding-section">
+        <div class="branding-content">
+            <div class="logo-area">
+                <div class="logo-icon">
+                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                        <rect width="48" height="48" rx="12" fill="url(#gradient1)"/>
+                        <path d="M16 20L24 28L32 20" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        <defs>
+                            <linearGradient id="gradient1" x1="0" y1="0" x2="48" y2="48">
+                                <stop offset="0%" stop-color="#667eea"/>
+                                <stop offset="100%" stop-color="#764ba2"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <h1 class="company-name">U+ Tong</h1>
             </div>
-            
-            <div class="form-group">
-                <label for="password">비밀번호:</label>
-                <input type="password" id="password" name="password" required value="1234">
+
+            <div class="welcome-text">
+                <h2>U+ Tong 백오피스 플랫폼</h2>
+                <p>유저 모니터링 <br> 코드 / 기프티콘 / 가격 정책 / 이벤트 / 쿠폰 관리 기능</p>
             </div>
-            
-            <button type="submit" class="login-btn">로그인</button>
-        </form>
-        
-        <div class="admin-info">
-            <strong>기본 관리자 계정</strong><br>
-            이메일: admin@naver.com<br>
-            비밀번호: 1234
+
+            <div class="features">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <span>보안 강화된 인증 시스템</span>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M9 19C-2 19 2 3 2 3S6 1 12 1C18 1 22 3 22 3S26 19 15 19L12 16L9 19Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <span>통합 관리 대시보드</span>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M17 21V19C17 16.7909 15.2091 15 13 15H5C2.79086 15 1 16.7909 1 19V21M23 21V19C22.9993 17.1137 21.9284 15.4028 20.219 14.8C19.6394 14.6072 19.0259 14.5065 18.4 14.5M16 3.13C17.8395 3.96 18.8395 6.04 18.8395 8.37C18.8395 10.7 17.8395 12.78 16 13.61M13 7C13 9.20914 11.2091 11 9 11C6.79086 11 5 9.20914 5 7C5 4.79086 6.79086 3 9 3C11.2091 3 13 4.79086 13 7Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <span>다중 사용자 권한 관리</span>
+                </div>
+            </div>
         </div>
     </div>
+
+    <!-- 우측 로그인 폼 영역 -->
+    <div class="login-section">
+        <div class="login-container">
+            <div class="login-header">
+                <h2>관리자 로그인</h2>
+                <p>시스템 관리를 위해 인증이 필요합니다</p>
+            </div>
+
+            <!-- Spring Security 에러/성공 메시지 -->
+            <div th:if="${param.error}" class="message error-message">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M10 18C14.4183 18 18 14.4183 18 10C18 5.58172 14.4183 2 10 2C5.58172 2 2 5.58172 2 10C2 14.4183 5.58172 18 10 18Z" stroke="currentColor" stroke-width="2"/>
+                    <path d="M8 12L12 8M8 8L12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <span>이메일 또는 비밀번호가 올바르지 않습니다.</span>
+            </div>
+
+            <div th:if="${param.logout}" class="message success-message">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M10 18C14.4183 18 18 14.4183 18 10C18 5.58172 14.4183 2 10 2C5.58172 2 2 5.58172 2 10C2 14.4183 5.58172 18 10 18Z" stroke="currentColor" stroke-width="2"/>
+                    <path d="M6 10L8.5 12.5L14 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>안전하게 로그아웃되었습니다.</span>
+            </div>
+
+            <!-- Spring Security 로그인 폼 -->
+            <form th:action="@{/auth/login}" method="post" class="login-form" id="loginForm">
+                <div class="form-group">
+                    <label for="username">이메일 주소</label>
+                    <div class="input-container">
+                        <svg class="input-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M3.33333 3.33334H16.6667C17.5833 3.33334 18.3333 4.08334 18.3333 5.00001V15C18.3333 15.9167 17.5833 16.6667 16.6667 16.6667H3.33333C2.41667 16.6667 1.66667 15.9167 1.66667 15V5.00001C1.66667 4.08334 2.41667 3.33334 3.33333 3.33334Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M18.3333 5L10 10.8333L1.66667 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <input
+                                type="email"
+                                id="username"
+                                name="username"
+                                placeholder="admin@example.com"
+                                value="admin@naver.com"
+                                required
+                        >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">비밀번호</label>
+                    <div class="input-container">
+                        <svg class="input-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <rect x="3" y="8" width="14" height="9" rx="2" ry="2" stroke="currentColor" stroke-width="1.5"/>
+                            <path d="M7 8V5C7 3.34315 8.34315 2 10 2C11.6569 2 13 3.34315 13 5V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="비밀번호를 입력하세요"
+                                value="1234"
+                                required
+                        >
+                        <button type="button" class="password-toggle" id="passwordToggle">
+                            <svg class="eye-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <path d="M1 10C1 10 4 4 10 4C16 4 19 10 19 10C19 10 16 16 10 16C4 16 1 10 1 10Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <circle cx="10" cy="10" r="3" stroke="currentColor" stroke-width="1.5"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-options">
+                    <label class="checkbox-container">
+                        <input type="checkbox" name="remember-me">
+                        <span class="checkmark"></span>
+                        로그인 정보 기억하기
+                    </label>
+                </div>
+
+                <button type="submit" class="login-btn" id="loginBtn">
+                    <span class="btn-text">로그인</span>
+                    <div class="loading-spinner" style="display: none;">
+                        <div class="spinner"></div>
+                    </div>
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/js/login.js}"></script>
 </body>
 </html>
